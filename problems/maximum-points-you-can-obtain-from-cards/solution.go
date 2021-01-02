@@ -47,8 +47,34 @@ func getSummationOfCardsFromFront(cardPoints []int, numberOfCardsToTake int, mem
 	if len(*memoize) < numberOfCardsToTake {
 		for i := len(*memoize); i < numberOfCardsToTake; i++ {
 
+			if i == 0 {
+				*memoize = append(*memoize, cardPoints[0])
+				continue
+			}
+
 			lastSummationInMemoize := (*memoize)[i-1]
 			nextCardValueToCalculate := cardPoints[i]
+
+			*memoize = append(*memoize, lastSummationInMemoize + nextCardValueToCalculate)
+		}
+	}
+
+	return (*memoize)[numberOfCardsToTake - 1]
+}
+
+func getSummationOfCardsFromBack(cardPoints []int, numberOfCardsToTake int, memoize *[]int) (sumResult int) {
+	memoizeSize := len(*memoize)
+
+	if memoizeSize < numberOfCardsToTake {
+		for i := memoizeSize; i < numberOfCardsToTake; i++ {
+
+			if i == 0 {
+				*memoize = append(*memoize, cardPoints[len(cardPoints) - 1])
+				continue
+			}
+
+			lastSummationInMemoize := (*memoize)[i-1]
+			nextCardValueToCalculate := cardPoints[len(cardPoints) - i]
 
 			*memoize = append(*memoize, lastSummationInMemoize + nextCardValueToCalculate)
 		}
