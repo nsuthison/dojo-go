@@ -44,8 +44,11 @@ func createSumMapFromFront(cards []int, numberOfCardsToSelect int) []int {
 }
 
 func getSummationOfCardsFromFront(cardPoints []int, numberOfCardsToTake int, memoize *[]int) (sumResult int) {
-	if len(*memoize) < numberOfCardsToTake {
-		for i := len(*memoize); i < numberOfCardsToTake; i++ {
+
+	memoizeSize := len(*memoize)
+
+	if memoizeSize < numberOfCardsToTake {
+		for i := memoizeSize; i < numberOfCardsToTake; i++ {
 
 			if i == 0 {
 				*memoize = append(*memoize, cardPoints[0])
@@ -64,17 +67,18 @@ func getSummationOfCardsFromFront(cardPoints []int, numberOfCardsToTake int, mem
 
 func getSummationOfCardsFromBack(cardPoints []int, numberOfCardsToTake int, memoize *[]int) (sumResult int) {
 	memoizeSize := len(*memoize)
+	lastCardPointsIndex := len(cardPoints) - 1
 
 	if memoizeSize < numberOfCardsToTake {
 		for i := memoizeSize; i < numberOfCardsToTake; i++ {
 
 			if i == 0 {
-				*memoize = append(*memoize, cardPoints[len(cardPoints) - 1])
+				*memoize = append(*memoize, cardPoints[lastCardPointsIndex])
 				continue
 			}
 
 			lastSummationInMemoize := (*memoize)[i-1]
-			nextCardValueToCalculate := cardPoints[len(cardPoints) - i]
+			nextCardValueToCalculate := cardPoints[lastCardPointsIndex - i]
 
 			*memoize = append(*memoize, lastSummationInMemoize + nextCardValueToCalculate)
 		}
