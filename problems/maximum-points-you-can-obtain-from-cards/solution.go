@@ -4,32 +4,37 @@ package solution
 import . "math"
 
 func maxScore(cardPoints []int, k int) int {
-	//
-	//numberOfCardsToSelect := k
-	//sumCardValueFromFront := createSumMapFromFront(cardPoints, numberOfCardsToSelect)
-	//
-	//numberOfCardsToSelectFromFront := k
-	//numberOfCardsToSelectFromBack := 0
-	//
-	//for false {
-	//
-	//}
 
-	return 0
-}
+	numberOfCardsToTakeFromFront := k
+	numberOfCardsToTakeFromBack := 0
 
-func createSumMapFromFront(cards []int, numberOfCardsToSelect int) []int {
-	sumCardValueFromFront := make([]int, numberOfCardsToSelect)
+	summationMemoizeFromFront := make([]int, 0)
+	summationMemoizeFromBack := make([]int, 0)
 
-	sumCardValueFromFront[0] = cards[0]
-	for i := 1; i < numberOfCardsToSelect; i++ {
-		sumCardValueFromFront[i] = sumCardValueFromFront[i-1] + cards[i]
+	maxScore := 0
+
+	for numberOfCardsToTakeFromBack <= k {
+
+		sumFromFront := getSummationOfCardsFrom(Front, cardPoints, numberOfCardsToTakeFromFront, &summationMemoizeFromFront)
+		sumFromBack := getSummationOfCardsFrom(Back, cardPoints, numberOfCardsToTakeFromBack, &summationMemoizeFromBack)
+		currentSum := sumFromFront + sumFromBack
+
+		if currentSum > maxScore {
+			maxScore = currentSum
+		}
+
+		numberOfCardsToTakeFromFront--
+		numberOfCardsToTakeFromBack++
 	}
 
-	return sumCardValueFromFront
+	return maxScore
 }
 
 func getSummationOfCardsFrom(direction LinearDirection, cardPoints []int, numberOfCardsToTake int, memoize *[]int) (sumResult int) {
+
+	if numberOfCardsToTake <= 0 {
+		return 0
+	}
 
 	pointerIndexStartingPoint := getPointerIndexStartingPointFrom(direction, len(cardPoints))
 
