@@ -3,7 +3,33 @@ package solution
 // Question: https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/
 
 func maxScore(cardPoints []int, k int) int {
-	return 0
+
+	numberOfCardsToSelect := k
+	sumCardValueFromFront := createSumMapFromFront(cardPoints, numberOfCardsToSelect)
+
+	cardPointsIndexFromLast := len(cardPoints) - 1
+
+	sumCardValueFromBack := make([]int, 0)
+	sumCardValueFromBack = append(sumCardValueFromBack, cardPoints[cardPointsIndexFromLast])
+
+	numberOfCardTakenFromFront := numberOfCardsToSelect - 1
+	numberOfCardTakenFromBack := 1
+
+	maxScore := sumCardValueFromFront[numberOfCardTakenFromFront - 1]
+
+	for numberOfCardTakenFromBack <= numberOfCardsToSelect {
+		currentSummation := sumCardValueFromFront[numberOfCardTakenFromFront - 1] + sumCardValueFromBack[numberOfCardTakenFromBack - 1]
+
+		if maxScore < currentSummation {
+			maxScore = currentSummation
+		}
+	}
+
+	//for numberOfCardTakenFromBack <= numberOfCardsToSelect {
+	//	currentSumScore := sumCardValueFromFront[numberOfCardTakenFromFront - 1] + cardPoints[cardPointsLastIndex - ]
+	//}
+
+	return maxScore
 }
 
 func createSumMapFromFront(cards []int, numberOfCardsToSelect int) []int {
@@ -15,5 +41,19 @@ func createSumMapFromFront(cards []int, numberOfCardsToSelect int) []int {
 	}
 
 	return sumCardValueFromFront
+}
+
+func getSummationOfCardsFromFront(cardPoints []int, numberOfCardsToTake int, memoize *[]int) (sumResult int) {
+	if len(*memoize) < numberOfCardsToTake {
+		for i := len(*memoize); i < numberOfCardsToTake; i++ {
+
+			lastSummationInMemoize := (*memoize)[i-1]
+			nextCardValueToCalculate := cardPoints[i]
+
+			*memoize = append(*memoize, lastSummationInMemoize + nextCardValueToCalculate)
+		}
+	}
+
+	return (*memoize)[numberOfCardsToTake - 1]
 }
 
