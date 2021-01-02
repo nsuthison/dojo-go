@@ -1,6 +1,7 @@
 package solution
 
 // Question: https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/
+
 import . "math"
 
 func maxScore(cardPoints []int, k int) int {
