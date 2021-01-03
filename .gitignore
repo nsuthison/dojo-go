@@ -16,3 +16,6 @@
 
 # GoLand specific file
 .idea
+
+# OS file
+.DS_Store
