@@ -11,17 +11,6 @@ func reorganizeString(S string) string {
 		if string(runes[i]) == string(runes[i+1]) {
 
 			isSwap := false
-
-			// Case which need to swap tail to head to make reorganize valid
-			if i + 2 == len(runes) && runes[0] != runes[i + 1]  {
-				runes = append([]rune{runes[i + 1]}, runes[:i+1]...)
-				return string(runes)
-			}
-
-			if i + 2 >= len(runes) {
-				return notPossibleCase
-			}
-
 			for idxToSwap := i + 2; idxToSwap < len(runes); idxToSwap++ {
 				if runes[i+1] != runes[idxToSwap] {
 					swapRunes(&runes, i+1, idxToSwap)
@@ -41,4 +30,20 @@ func reorganizeString(S string) string {
 
 func swapRunes(runes *[]rune, firstIndex int, secondIndex int) {
 	(*runes)[firstIndex], (*runes)[secondIndex] = (*runes)[secondIndex], (*runes)[firstIndex]
+}
+
+func categorizeNumberOfEachRuneIn(runes []rune) (letterMapper map[rune]int) {
+
+	letterMapper = make(map[rune]int)
+
+	for _, rune := range runes {
+
+		if _, isExist := letterMapper[rune]; isExist {
+			letterMapper[rune]++
+		} else {
+			letterMapper[rune] = 1
+		}
+	}
+
+	return letterMapper
 }
