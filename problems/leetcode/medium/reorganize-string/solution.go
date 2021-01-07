@@ -29,7 +29,7 @@ func reorganizeString(S string) string {
 	}
 	
 	for firstIdxPointer < len(sortedLetterInfoes) {
-		for sortedLetterInfoes[firstIdxPointer].numberOfLetter > 0 && sortedLetterInfoes[secondIdxPointer].numberOfLetter > 0{
+		for sortedLetterInfoes[firstIdxPointer].numberOfLetter > 0 && sortedLetterInfoes[secondIdxPointer].numberOfLetter > 0 {
 			result = append(result, sortedLetterInfoes[firstIdxPointer].letter)
 			result = append(result, sortedLetterInfoes[secondIdxPointer].letter)
 
@@ -42,10 +42,15 @@ func reorganizeString(S string) string {
 				firstIdxPointer = newSelectedPointer
 			} else {
 				if sortedLetterInfoes[secondIdxPointer].numberOfLetter > 1 {
-					return notPossibleCase
-				} else {
+					return string(result)
+					//return notPossibleCase
+				}
+
+				if sortedLetterInfoes[secondIdxPointer].numberOfLetter == 1 {
 					return string(append(result, sortedLetterInfoes[secondIdxPointer].letter))
 				}
+
+				return string(result)
 			}
 		}
 
@@ -54,10 +59,15 @@ func reorganizeString(S string) string {
 				secondIdxPointer = newSelectedPointer
 			} else {
 				if sortedLetterInfoes[firstIdxPointer].numberOfLetter > 1 {
-					return notPossibleCase
-				} else {
+					return string(result)
+					//return notPossibleCase
+				}
+
+				if sortedLetterInfoes[firstIdxPointer].numberOfLetter == 1 {
 					return string(append(result, sortedLetterInfoes[firstIdxPointer].letter))
 				}
+
+				return string(result)
 			}
 		}
 	}
