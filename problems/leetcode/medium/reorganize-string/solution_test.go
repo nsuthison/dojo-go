@@ -5,33 +5,66 @@ import (
 	"testing"
 )
 
-//func Test_reorganizeString(t *testing.T) {
-//	Convey("Given some random string", t, func() {
-//		input := "aab"
-//
-//		Convey("When pass the random string to reorganizeString function", func() {
-//			result := reorganizeString(input)
-//
-//			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
-//				So(result, ShouldEqual, "aba")
-//			})
-//		})
-//	})
-//}
-//
-//func Test_reorganizeString2(t *testing.T) {
-//	Convey("Given some random string", t, func() {
-//		input := "baaba"
-//
-//		Convey("When pass the random string to reorganizeString function", func() {
-//			result := reorganizeString(input)
-//
-//			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
-//				So(result, ShouldEqual, "ababa")
-//			})
-//		})
-//	})
-//}
+func Test_reorganizeString(t *testing.T) {
+	Convey("Given some random string", t, func() {
+		input := "aab"
+
+		Convey("When pass the random string to reorganizeString function", func() {
+			result := reorganizeString(input)
+
+			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
+				for i := 0; i < len(result)-1; i++ {
+					So(result[i], ShouldNotEqual, result[i+1])
+				}			})
+		})
+	})
+}
+
+func Test_reorganizeString2(t *testing.T) {
+	Convey("Given some random string", t, func() {
+		input := "baaba"
+
+		Convey("When pass the random string to reorganizeString function", func() {
+			result := reorganizeString(input)
+
+			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
+				for i := 0; i < len(result)-1; i++ {
+					So(result[i], ShouldNotEqual, result[i+1])
+				}
+			})
+		})
+	})
+}
+
+func Test_reorganizeString3(t *testing.T) {
+	Convey("Given some random string", t, func() {
+		input := "cxmwmmm"
+
+		Convey("When pass the random string to reorganizeString function", func() {
+			result := reorganizeString(input)
+
+			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
+				for i := 0; i < len(result)-1; i++ {
+					So(result[i], ShouldNotEqual, result[i+1])
+				}
+			})
+		})
+	})
+}
+
+func Test_reorganizeString4(t *testing.T) {
+	Convey("Given some random string", t, func() {
+		input := "bbbbbbb"
+
+		Convey("When pass the random string to reorganizeString function", func() {
+			result := reorganizeString(input)
+
+			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
+				So(result, ShouldEqual, "")
+			})
+		})
+	})
+}
 
 func Test_swapRunes(t *testing.T) {
 	Convey("Given runes and 2 index", t, func() {
