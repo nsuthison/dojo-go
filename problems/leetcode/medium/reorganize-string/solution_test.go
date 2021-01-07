@@ -69,24 +69,32 @@ func Test_categorizeNumberOfEachRuneIn(t *testing.T) {
 	})
 }
 
-//func Test_createLetterInStringInfosFrom(t *testing.T) {
-//	Convey("Given map[rune]int", t, func() {
-//		someString := "cxmwwmmwmwc"
-//		runes := []rune(someString)
-//
-//		categorize := categorizeNumberOfEachRuneIn(runes)
-//
-//		Convey("When create letterInStringInfos", func() {
-//
-//			result := createLetterInStringInfosFrom(categorize)
-//
-//			Convey("Then the categorize should ", func() {
-//
-//				So(result, ShouldEqual, 1)
-//				So(categorize['x'], ShouldEqual, 1)
-//				So(categorize['w'], ShouldEqual, 1)
-//				So(categorize['m'], ShouldEqual, 4)
-//			})
-//		})
-//	})
-//}
+func Test_createLetterInStringInfosFrom(t *testing.T) {
+	Convey("Given map[rune]int", t, func() {
+		someString := "cxmwwmmmwc"
+		runes := []rune(someString)
+
+		categorize := categorizeNumberOfEachRuneIn(runes)
+
+		Convey("When create letterInStringInfos", func() {
+
+			result := createLetterInStringInfosFrom(categorize)
+
+			Convey("Then it should create slice with letterInfo", func() {
+
+				for _, letterInfo := range result {
+					switch letterInfo.letter {
+					case 'x':
+						So(letterInfo.numberOfLetter, ShouldEqual, 1)
+					case 'w':
+						So(letterInfo.numberOfLetter, ShouldEqual, 3)
+					case 'm':
+						So(letterInfo.numberOfLetter, ShouldEqual, 4)
+					case 'c':
+						So(letterInfo.numberOfLetter, ShouldEqual, 2)
+					}
+				}
+			})
+		})
+	})
+}
