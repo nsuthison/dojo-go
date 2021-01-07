@@ -47,3 +47,21 @@ func categorizeNumberOfEachRuneIn(runes []rune) (letterMapper map[rune]int) {
 
 	return letterMapper
 }
+
+func createLetterInStringInfosFrom(runeMap map[rune]int) []lettersInStringInfo {
+	infos := make([]lettersInStringInfo, 0)
+
+	for letter, numberOfLetter := range runeMap {
+		infos = append(infos, lettersInStringInfo{
+			letter: letter,
+			numberOfLetter: numberOfLetter,
+		})
+	}
+
+	return infos
+}
+
+type lettersInStringInfo struct {
+	letter rune
+	numberOfLetter int
+}

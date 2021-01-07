@@ -56,7 +56,7 @@ func Test_categorizeNumberOfEachRuneIn(t *testing.T) {
 		someString := "cxmwmmm"
 		runes := []rune(someString)
 
-		Convey("When caragorize number of each rune", func() {
+		Convey("When categorize number of each rune", func() {
 			categorize := categorizeNumberOfEachRuneIn(runes)
 
 			Convey("Then the categorize should ", func() {
@@ -68,3 +68,25 @@ func Test_categorizeNumberOfEachRuneIn(t *testing.T) {
 		})
 	})
 }
+
+//func Test_createLetterInStringInfosFrom(t *testing.T) {
+//	Convey("Given map[rune]int", t, func() {
+//		someString := "cxmwwmmwmwc"
+//		runes := []rune(someString)
+//
+//		categorize := categorizeNumberOfEachRuneIn(runes)
+//
+//		Convey("When create letterInStringInfos", func() {
+//
+//			result := createLetterInStringInfosFrom(categorize)
+//
+//			Convey("Then the categorize should ", func() {
+//
+//				So(result, ShouldEqual, 1)
+//				So(categorize['x'], ShouldEqual, 1)
+//				So(categorize['w'], ShouldEqual, 1)
+//				So(categorize['m'], ShouldEqual, 4)
+//			})
+//		})
+//	})
+//}
