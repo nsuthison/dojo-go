@@ -1,5 +1,7 @@
 package solution
 
+import "sort"
+
 const notPossibleCase string = ""
 
 // Question: https://leetcode.com/problems/reorganize-string/
@@ -7,23 +9,14 @@ func reorganizeString(S string) string {
 
 	runes := []rune(S)
 
-	for i := 0; i < len(runes) - 1; i++ {
-		if string(runes[i]) == string(runes[i+1]) {
-
-			isSwap := false
-			for idxToSwap := i + 2; idxToSwap < len(runes); idxToSwap++ {
-				if runes[i+1] != runes[idxToSwap] {
-					swapRunes(&runes, i+1, idxToSwap)
-					isSwap = true
-					break
-				}
-			}
-
-			if !isSwap {
-				return notPossibleCase
-			}
-		}
-	}
+	//letterMapper := categorizeNumberOfEachRuneIn(runes)
+	//letterInfoes := createLetterInStringInfosFrom(letterMapper)
+	//sortedLetterInfoes := descSort(letterInfoes)
+	//
+	//firstIdxPointer := 0
+	//secondIdxPointer := 1
+	//
+	//for firstIdxPointer < len(sortedLetterInfoes)
 
 	return string(runes)
 }
@@ -46,6 +39,14 @@ func categorizeNumberOfEachRuneIn(runes []rune) (letterMapper map[rune]int) {
 	}
 
 	return letterMapper
+}
+
+func descSort(letterInfos []lettersInStringInfo) []lettersInStringInfo {
+	sort.Slice(letterInfos, func(i,j int) bool {
+		return letterInfos[i].numberOfLetter > letterInfos[j].numberOfLetter
+	})
+
+	return letterInfos
 }
 
 func createLetterInStringInfosFrom(runeMap map[rune]int) []lettersInStringInfo {

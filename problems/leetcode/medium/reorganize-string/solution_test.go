@@ -98,3 +98,26 @@ func Test_createLetterInStringInfosFrom(t *testing.T) {
 		})
 	})
 }
+
+func Test_descSort(t *testing.T) {
+	Convey("Given letterInStringInfos", t, func() {
+		someString := "cxmwwmmmwc"
+		runes := []rune(someString)
+
+		categorize := categorizeNumberOfEachRuneIn(runes)
+		letterInfos := createLetterInStringInfosFrom(categorize)
+
+		Convey("When descSort letterInfos", func() {
+
+			sortedLetterInfos := descSort(letterInfos)
+
+			Convey("Then it should create slice with letterInfo", func() {
+
+				So(sortedLetterInfos[0].letter, ShouldEqual, 'm')
+				So(sortedLetterInfos[1].letter, ShouldEqual, 'w')
+				So(sortedLetterInfos[2].letter, ShouldEqual, 'c')
+				So(sortedLetterInfos[3].letter, ShouldEqual, 'x')
+			})
+		})
+	})
+}
