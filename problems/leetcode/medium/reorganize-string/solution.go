@@ -42,8 +42,7 @@ func reorganizeString(S string) string {
 				firstIdxPointer = newSelectedPointer
 			} else {
 				if sortedLetterInfoes[secondIdxPointer].numberOfLetter > 1 {
-					return string(result)
-					//return notPossibleCase
+					return notPossibleCase
 				}
 
 				if sortedLetterInfoes[secondIdxPointer].numberOfLetter == 1 {
@@ -59,8 +58,7 @@ func reorganizeString(S string) string {
 				secondIdxPointer = newSelectedPointer
 			} else {
 				if sortedLetterInfoes[firstIdxPointer].numberOfLetter > 1 {
-					return string(result)
-					//return notPossibleCase
+					return notPossibleCase
 				}
 
 				if sortedLetterInfoes[firstIdxPointer].numberOfLetter == 1 {
@@ -75,11 +73,11 @@ func reorganizeString(S string) string {
 	return string(runes)
 }
 
-func selectNextPointer(letterInfoes []lettersInStringInfo, indexToSelect int, anotherIdx int) (newSelectedIndex int, canSelectNewIndex bool) {
-	for letterInfoes[indexToSelect].numberOfLetter == 0 || indexToSelect == anotherIdx {
+func selectNextPointer(letterInfos []lettersInStringInfo, indexToSelect int, anotherIdx int) (newSelectedIndex int, canSelectNewIndex bool) {
+	for letterInfos[indexToSelect].numberOfLetter == 0 || indexToSelect == anotherIdx {
 		indexToSelect++
 
-		if indexToSelect >= len(letterInfoes) {
+		if indexToSelect >= len(letterInfos) {
 			return -1, false
 		}
 	}

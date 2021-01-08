@@ -91,23 +91,23 @@ func Test_reorganizeString5(t *testing.T) {
 	})
 }
 
-//func Test_reorganizeString6(t *testing.T) {
-//	Convey("Given some random string", t, func() {
-//		input := "tndsewnllhrtwsvxenkscbivijfqnysamckzoyfnapuotmdexzkkrpmppttficzerdndssuveompqkemtbwbodrhwsfpbmkafpwyedpcowruntvymxtyyejqtajkcjakghtdwmuygecjncxzcxezgecrxonnszmqmecgvqqkdagvaaucewelchsmebikscciegzoiamovdojrmmwgbxeygibxxltemfgpogjkhobmhwquizuwvhfaiavsxhiknysdghcawcrphaykyashchyomklvghkyabxatmrkmrfsppfhgrwywtlxebgzmevefcqquvhvgounldxkdzndwybxhtycmlybhaaqvodntsvfhwcuhvuccwcsxelafyzushjhfyklvghpfvknprfouevsxmcuhiiiewcluehpmzrjzffnrptwbuhnyahrbzqvirvmffbxvrmynfcnupnukayjghpusewdwrbkhvjnveuiionefmnfxao"
-//
-//		Convey("When pass the random string to reorganizeString function", func() {
-//			result := reorganizeString(input)
-//
-//			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
-//				So(len(result), ShouldEqual, len(input))
-//
-//				for i := 0; i < len(result)-1; i++ {
-//					So(result[i], ShouldNotEqual, result[i+1])
-//				}
-//			})
-//		})
-//	})
-//}
+func Test_reorganizeString6(t *testing.T) {
+	Convey("Given some random string", t, func() {
+		input := "tndsewnllhrtwsvxenkscbivijfqnysamckzoyfnapuotmdexzkkrpmppttficzerdndssuveompqkemtbwbodrhwsfpbmkafpwyedpcowruntvymxtyyejqtajkcjakghtdwmuygecjncxzcxezgecrxonnszmqmecgvqqkdagvaaucewelchsmebikscciegzoiamovdojrmmwgbxeygibxxltemfgpogjkhobmhwquizuwvhfaiavsxhiknysdghcawcrphaykyashchyomklvghkyabxatmrkmrfsppfhgrwywtlxebgzmevefcqquvhvgounldxkdzndwybxhtycmlybhaaqvodntsvfhwcuhvuccwcsxelafyzushjhfyklvghpfvknprfouevsxmcuhiiiewcluehpmzrjzffnrptwbuhnyahrbzqvirvmffbxvrmynfcnupnukayjghpusewdwrbkhvjnveuiionefmnfxao"
+
+		Convey("When pass the random string to reorganizeString function", func() {
+			result := reorganizeString(input)
+
+			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
+				So(len(result), ShouldEqual, len(input))
+
+				for i := 0; i < len(result)-1; i++ {
+					So(result[i], ShouldNotEqual, result[i+1])
+				}
+			})
+		})
+	})
+}
 
 func Test_swapRunes(t *testing.T) {
 	Convey("Given runes and 2 index", t, func() {
