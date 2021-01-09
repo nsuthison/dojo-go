@@ -5,108 +5,60 @@ import (
 	"testing"
 )
 
-func Test_reorganizeString(t *testing.T) {
-	Convey("Given some random string", t, func() {
-		input := "aab"
-
-		Convey("When pass the random string to reorganizeString function", func() {
-			result := reorganizeString(input)
-
-			Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
-				So(len(result), ShouldEqual, len(input))
-
-				for i := 0; i < len(result)-1; i++ {
-					So(result[i], ShouldNotEqual, result[i+1])
-				}
-			})
-		})
-	})
+var reorganizeStringSuccessCaseTestCases = []struct{
+	input string
+}{
+	{"aab"},
+	{"baaba"},
+	{"cxmwmmm"},
+	{"abbabbaaab"},
+	{"tndsewnllhrtwsvxenkscbivijfqnysamckzoyfnapuotmdexzkkrpmppttficzerdndssuveompqkemtbwbodrhwsfpbmkafpwyedpcowruntvymxtyyejqtajkcjakghtdwmuygecjncxzcxezgecrxonnszmqmecgvqqkdagvaaucewelchsmebikscciegzoiamovdojrmmwgbxeygibxxltemfgpogjkhobmhwquizuwvhfaiavsxhiknysdghcawcrphaykyashchyomklvghkyabxatmrkmrfsppfhgrwywtlxebgzmevefcqquvhvgounldxkdzndwybxhtycmlybhaaqvodntsvfhwcuhvuccwcsxelafyzushjhfyklvghpfvknprfouevsxmcuhiiiewcluehpmzrjzffnrptwbuhnyahrbzqvirvmffbxvrmynfcnupnukayjghpusewdwrbkhvjnveuiionefmnfxao"},
 }
 
-func Test_reorganizeString2(t *testing.T) {
-	Convey("Given some random string", t, func() {
-		input := "baaba"
-
-		Convey("When pass the random string to reorganizeString function", func() {
-			result := reorganizeString(input)
-
-			Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
-				So(len(result), ShouldEqual, len(input))
-
-				for i := 0; i < len(result)-1; i++ {
-					So(result[i], ShouldNotEqual, result[i+1])
-				}
-			})
-		})
-	})
+var reorganizeStringFailCaseTestCases = []struct{
+	input string
+}{
+	{"bbbbbbb"},
 }
 
-func Test_reorganizeString3(t *testing.T) {
-	Convey("Given some random string", t, func() {
-		input := "cxmwmmm"
+func Test_reorganizeString_SuccessCase(t *testing.T) {
+	for _, testCase := range reorganizeStringSuccessCaseTestCases {
+		t.Run("reorganizeStringSuccessCase", func(t *testing.T){
+			Convey("Given some random string", t, func() {
+				input := testCase.input
 
-		Convey("When pass the random string to reorganizeString function", func() {
-			result := reorganizeString(input)
+				Convey("When pass the random string to reorganizeString function", func() {
+					result := reorganizeString(input)
 
-			Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
-				So(len(result), ShouldEqual, len(input))
+					Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
+						So(len(result), ShouldEqual, len(input))
 
-				for i := 0; i < len(result)-1; i++ {
-					So(result[i], ShouldNotEqual, result[i+1])
-				}
+						for i := 0; i < len(result)-1; i++ {
+							So(result[i], ShouldNotEqual, result[i+1])
+						}
+					})
+				})
 			})
 		})
-	})
+	}
 }
 
-func Test_reorganizeString4(t *testing.T) {
-	Convey("Given some random string", t, func() {
-		input := "bbbbbbb"
+func Test_reorganizeString_FailCase(t *testing.T) {
+	for _, testCase := range reorganizeStringFailCaseTestCases {
+		t.Run("reorganizeStringFailCase", func(t *testing.T){
+			Convey("Given some random string", t, func() {
+				input := testCase.input
 
-		Convey("When pass the random string to reorganizeString function", func() {
-			result := reorganizeString(input)
+				Convey("When pass the random string which cannot reorganize to match the rule to reorganizeString function", func() {
+					result := reorganizeString(input)
 
-			Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
-				So(result, ShouldEqual, "")
+					Convey("Then the result should be empty string", func() {
+						So(result, ShouldEqual, "")
+					})
+				})
 			})
 		})
-	})
-}
-
-func Test_reorganizeString5(t *testing.T) {
-	Convey("Given some random string", t, func() {
-		input := "abbabbaaab"
-
-		Convey("When pass the random string to reorganizeString function", func() {
-			result := reorganizeString(input)
-
-			Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
-				So(len(result), ShouldEqual, len(input))
-
-				for i := 0; i < len(result)-1; i++ {
-					So(result[i], ShouldNotEqual, result[i+1])
-				}
-			})
-		})
-	})
-}
-
-func Test_reorganizeString6(t *testing.T) {
-	Convey("Given some random string", t, func() {
-		input := "tndsewnllhrtwsvxenkscbivijfqnysamckzoyfnapuotmdexzkkrpmppttficzerdndssuveompqkemtbwbodrhwsfpbmkafpwyedpcowruntvymxtyyejqtajkcjakghtdwmuygecjncxzcxezgecrxonnszmqmecgvqqkdagvaaucewelchsmebikscciegzoiamovdojrmmwgbxeygibxxltemfgpogjkhobmhwquizuwvhfaiavsxhiknysdghcawcrphaykyashchyomklvghkyabxatmrkmrfsppfhgrwywtlxebgzmevefcqquvhvgounldxkdzndwybxhtycmlybhaaqvodntsvfhwcuhvuccwcsxelafyzushjhfyklvghpfvknprfouevsxmcuhiiiewcluehpmzrjzffnrptwbuhnyahrbzqvirvmffbxvrmynfcnupnukayjghpusewdwrbkhvjnveuiionefmnfxao"
-
-		Convey("When pass the random string to reorganizeString function", func() {
-			result := reorganizeString(input)
-
-			Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
-				So(len(result), ShouldEqual, len(input))
-
-				for i := 0; i < len(result)-1; i++ {
-					So(result[i], ShouldNotEqual, result[i+1])
-				}
-			})
-		})
-	})
+	}
 }
 
 func Test_categorizeNumberOfEachRuneIn(t *testing.T) {
