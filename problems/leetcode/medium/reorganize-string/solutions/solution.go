@@ -144,8 +144,11 @@ func tryInsertLeftOverLettersTo(runes []rune, letterInfo models.LetterInfo) (res
 				letterInfo.NumberOfLetter--
 			}
 		case len(runes):
-			runes = append(runes, letterInfo.Letter)
-			letterInfo.NumberOfLetter--
+			if runes[idxToInsert - 1] != letterInfo.Letter {
+				runes = append(runes, letterInfo.Letter)
+
+				letterInfo.NumberOfLetter--
+			}
 		default:
 			if runes[idxToInsert] != letterInfo.Letter && runes[idxToInsert - 1] != letterInfo.Letter {
 				runes = append(runes[:idxToInsert + 1], runes[idxToInsert:]...)
