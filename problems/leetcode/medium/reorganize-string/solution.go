@@ -1,6 +1,7 @@
 package solution
 
 import (
+	"github.com/nsuthison/dojo-go/problems/leetcode/medium/reorganize-string/models"
 	"sort"
 )
 
@@ -31,19 +32,19 @@ func reorganizeString(S string) string {
 	}
 	
 	for firstIdxPointer < len(sortedLetterInfoes) {
-		for sortedLetterInfoes[firstIdxPointer].numberOfLetter > 0 && sortedLetterInfoes[secondIdxPointer].numberOfLetter > 0 {
-			result = append(result, sortedLetterInfoes[firstIdxPointer].letter)
-			result = append(result, sortedLetterInfoes[secondIdxPointer].letter)
+		for sortedLetterInfoes[firstIdxPointer].NumberOfLetter > 0 && sortedLetterInfoes[secondIdxPointer].NumberOfLetter > 0 {
+			result = append(result, sortedLetterInfoes[firstIdxPointer].Letter)
+			result = append(result, sortedLetterInfoes[secondIdxPointer].Letter)
 
-			sortedLetterInfoes[firstIdxPointer].numberOfLetter--
-			sortedLetterInfoes[secondIdxPointer].numberOfLetter--
+			sortedLetterInfoes[firstIdxPointer].NumberOfLetter--
+			sortedLetterInfoes[secondIdxPointer].NumberOfLetter--
 		}
 
-		if sortedLetterInfoes[firstIdxPointer].numberOfLetter <= 0 {
+		if sortedLetterInfoes[firstIdxPointer].NumberOfLetter <= 0 {
 			if newSelectedPointer, canSelectNewIndex := selectNextPointer(sortedLetterInfoes, firstIdxPointer, secondIdxPointer); canSelectNewIndex {
 				firstIdxPointer = newSelectedPointer
 			} else {
-				if sortedLetterInfoes[secondIdxPointer].numberOfLetter == 0 {
+				if sortedLetterInfoes[secondIdxPointer].NumberOfLetter == 0 {
 					return string(result)
 				} else {
 					if result, canInsert := tryInsertLeftOverLettersTo(result, sortedLetterInfoes[secondIdxPointer]); canInsert {
@@ -55,11 +56,11 @@ func reorganizeString(S string) string {
 			}
 		}
 
-		if sortedLetterInfoes[secondIdxPointer].numberOfLetter <= 0 {
+		if sortedLetterInfoes[secondIdxPointer].NumberOfLetter <= 0 {
 			if newSelectedPointer, canSelectNewIndex := selectNextPointer(sortedLetterInfoes, secondIdxPointer, firstIdxPointer); canSelectNewIndex {
 				secondIdxPointer = newSelectedPointer
 			} else {
-				if sortedLetterInfoes[firstIdxPointer].numberOfLetter == 0 {
+				if sortedLetterInfoes[firstIdxPointer].NumberOfLetter == 0 {
 					return string(result)
 				} else {
 					if result, canInsert := tryInsertLeftOverLettersTo(result, sortedLetterInfoes[firstIdxPointer]); canInsert {
@@ -75,8 +76,8 @@ func reorganizeString(S string) string {
 	return string(runes)
 }
 
-func selectNextPointer(letterInfos []lettersInStringInfo, indexToSelect int, anotherIdx int) (newSelectedIndex int, canSelectNewIndex bool) {
-	for letterInfos[indexToSelect].numberOfLetter == 0 || indexToSelect == anotherIdx {
+func selectNextPointer(letterInfos []models.LetterInfo, indexToSelect int, anotherIdx int) (newSelectedIndex int, canSelectNewIndex bool) {
+	for letterInfos[indexToSelect].NumberOfLetter == 0 || indexToSelect == anotherIdx {
 		indexToSelect++
 
 		if indexToSelect >= len(letterInfos) {
@@ -107,63 +108,58 @@ func categorizeNumberOfEachRuneIn(runes []rune) (letterMapper map[rune]int) {
 	return letterMapper
 }
 
-func createLetterInStringInfosFrom(runeMap map[rune]int) []lettersInStringInfo {
-	infos := make([]lettersInStringInfo, 0)
+func createLetterInStringInfosFrom(runeMap map[rune]int) []models.LetterInfo {
+	infos := make([]models.LetterInfo, 0)
 
 	for letter, numberOfLetter := range runeMap {
-		infos = append(infos, lettersInStringInfo{
-			letter: letter,
-			numberOfLetter: numberOfLetter,
+		infos = append(infos, models.LetterInfo{
+			Letter:         letter,
+			NumberOfLetter: numberOfLetter,
 		})
 	}
 
 	return infos
 }
 
-func descSort(letterInfos []lettersInStringInfo) []lettersInStringInfo {
+func descSort(letterInfos []models.LetterInfo) []models.LetterInfo {
 	sort.Slice(letterInfos, func(i,j int) bool {
-		return letterInfos[i].numberOfLetter > letterInfos[j].numberOfLetter
+		return letterInfos[i].NumberOfLetter > letterInfos[j].NumberOfLetter
 	})
 
 	return letterInfos
 }
 
-func tryInsertLeftOverLettersTo(runes []rune, letterInfo lettersInStringInfo) (result []rune, canInsert bool) {
+func tryInsertLeftOverLettersTo(runes []rune, letterInfo models.LetterInfo) (result []rune, canInsert bool) {
 	idxToInsert := 0
 
-	for letterInfo.numberOfLetter > 0 && idxToInsert <= len(runes)  {
+	for letterInfo.NumberOfLetter > 0 && idxToInsert <= len(runes)  {
 		if idxToInsert == len(runes) {
-			runes = append(runes, letterInfo.letter)
-			letterInfo.numberOfLetter--
+			runes = append(runes, letterInfo.Letter)
+			letterInfo.NumberOfLetter--
 			break
 		}
 
-		if runes[idxToInsert] != letterInfo.letter {
+		if runes[idxToInsert] != letterInfo.Letter {
 			if idxToInsert > 0 {
-				if runes[idxToInsert - 1] != letterInfo.letter {
+				if runes[idxToInsert - 1] != letterInfo.Letter {
 					runes = append(runes[:idxToInsert + 1], runes[idxToInsert:]...)
-					runes[idxToInsert] = letterInfo.letter
+					runes[idxToInsert] = letterInfo.Letter
 
-					letterInfo.numberOfLetter--
+					letterInfo.NumberOfLetter--
 				}
 			} else {
-				runes = append([]rune{letterInfo.letter}, runes...)
+				runes = append([]rune{letterInfo.Letter}, runes...)
 
-				letterInfo.numberOfLetter--
+				letterInfo.NumberOfLetter--
 			}
 		}
 
 		idxToInsert = idxToInsert + 2
 	}
 
-	if letterInfo.numberOfLetter > 0 {
+	if letterInfo.NumberOfLetter > 0 {
 		return nil, false
 	}
 
 	return runes, true
-}
-
-type lettersInStringInfo struct {
-	letter rune
-	numberOfLetter int
 }

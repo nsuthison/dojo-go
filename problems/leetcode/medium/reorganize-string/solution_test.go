@@ -12,7 +12,7 @@ func Test_reorganizeString(t *testing.T) {
 		Convey("When pass the random string to reorganizeString function", func() {
 			result := reorganizeString(input)
 
-			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
+			Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
 				So(len(result), ShouldEqual, len(input))
 
 				for i := 0; i < len(result)-1; i++ {
@@ -30,7 +30,7 @@ func Test_reorganizeString2(t *testing.T) {
 		Convey("When pass the random string to reorganizeString function", func() {
 			result := reorganizeString(input)
 
-			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
+			Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
 				So(len(result), ShouldEqual, len(input))
 
 				for i := 0; i < len(result)-1; i++ {
@@ -48,7 +48,7 @@ func Test_reorganizeString3(t *testing.T) {
 		Convey("When pass the random string to reorganizeString function", func() {
 			result := reorganizeString(input)
 
-			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
+			Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
 				So(len(result), ShouldEqual, len(input))
 
 				for i := 0; i < len(result)-1; i++ {
@@ -66,7 +66,7 @@ func Test_reorganizeString4(t *testing.T) {
 		Convey("When pass the random string to reorganizeString function", func() {
 			result := reorganizeString(input)
 
-			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
+			Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
 				So(result, ShouldEqual, "")
 			})
 		})
@@ -80,7 +80,7 @@ func Test_reorganizeString5(t *testing.T) {
 		Convey("When pass the random string to reorganizeString function", func() {
 			result := reorganizeString(input)
 
-			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
+			Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
 				So(len(result), ShouldEqual, len(input))
 
 				for i := 0; i < len(result)-1; i++ {
@@ -98,7 +98,7 @@ func Test_reorganizeString6(t *testing.T) {
 		Convey("When pass the random string to reorganizeString function", func() {
 			result := reorganizeString(input)
 
-			Convey("Then the result string shouldn't have same letter adjacent to each other", func() {
+			Convey("Then the result string shouldn't have same Letter adjacent to each other", func() {
 				So(len(result), ShouldEqual, len(input))
 
 				for i := 0; i < len(result)-1; i++ {
@@ -156,18 +156,18 @@ func Test_createLetterInStringInfosFrom(t *testing.T) {
 
 			result := createLetterInStringInfosFrom(categorize)
 
-			Convey("Then it should create slice with letterInfo", func() {
+			Convey("Then it should create slice with LetterInfo", func() {
 
 				for _, letterInfo := range result {
-					switch letterInfo.letter {
+					switch letterInfo.Letter {
 					case 'x':
-						So(letterInfo.numberOfLetter, ShouldEqual, 1)
+						So(letterInfo.NumberOfLetter, ShouldEqual, 1)
 					case 'w':
-						So(letterInfo.numberOfLetter, ShouldEqual, 3)
+						So(letterInfo.NumberOfLetter, ShouldEqual, 3)
 					case 'm':
-						So(letterInfo.numberOfLetter, ShouldEqual, 4)
+						So(letterInfo.NumberOfLetter, ShouldEqual, 4)
 					case 'c':
-						So(letterInfo.numberOfLetter, ShouldEqual, 2)
+						So(letterInfo.NumberOfLetter, ShouldEqual, 2)
 					}
 				}
 			})
@@ -187,12 +187,12 @@ func Test_descSort(t *testing.T) {
 
 			sortedLetterInfos := descSort(letterInfos)
 
-			Convey("Then it should create slice with letterInfo", func() {
+			Convey("Then it should create slice with LetterInfo", func() {
 
-				So(sortedLetterInfos[0].letter, ShouldEqual, 'm')
-				So(sortedLetterInfos[1].letter, ShouldEqual, 'w')
-				So(sortedLetterInfos[2].letter, ShouldEqual, 'c')
-				So(sortedLetterInfos[3].letter, ShouldEqual, 'x')
+				So(sortedLetterInfos[0].Letter, ShouldEqual, 'm')
+				So(sortedLetterInfos[1].Letter, ShouldEqual, 'w')
+				So(sortedLetterInfos[2].Letter, ShouldEqual, 'c')
+				So(sortedLetterInfos[3].Letter, ShouldEqual, 'x')
 			})
 		})
 	})
