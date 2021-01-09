@@ -14,6 +14,7 @@ const notPossibleCase string = ""
 /// Then use 2 pointer from top to bottom to append letter to create result
 /// It might have left over letter from the last sorted letter array
 /// Insert left over to the result from the start of the result string by jumping each time by 2
+/// Note: There's a shorter solution in the source above that you can check. But I'll leave my version here for personal mile stone :D
 func reorganizeString(S string) string {
 
 	runes := []rune(S)
