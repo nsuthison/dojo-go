@@ -17,14 +17,11 @@ const notPossibleCase string = ""
 /// Note: There's a shorter solution in the source above that you can check. But I'll leave my version here for personal mile stone :D
 func reorganizeString(S string) string {
 
-	runes := []rune(S)
-
 	if len(S) <= 1 {
 		return S
 	}
 
-	letterMapper := categorizeNumberOfEachRuneIn(runes)
-	letterInfos := createLetterInStringInfosFrom(letterMapper)
+	letterInfos := createLetterInStringInfosFrom(categorizeNumberOfEachRuneIn([]rune(S)))
 	sortedLetterInfos := descSort(letterInfos)
 
 	if len(sortedLetterInfos) <= 1 {
