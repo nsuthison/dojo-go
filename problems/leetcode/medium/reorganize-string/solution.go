@@ -41,15 +41,15 @@ func reorganizeString(S string) string {
 			if newSelectedPointer, canSelectNewIndex := selectNextPointer(sortedLetterInfoes, firstIdxPointer, secondIdxPointer); canSelectNewIndex {
 				firstIdxPointer = newSelectedPointer
 			} else {
-				if sortedLetterInfoes[secondIdxPointer].numberOfLetter > 1 {
-					return notPossibleCase
+				if sortedLetterInfoes[secondIdxPointer].numberOfLetter == 0 {
+					return string(result)
+				} else {
+					if result, canInsert := tryInsertLeftOverLettersTo(result, sortedLetterInfoes[secondIdxPointer]); canInsert {
+						return string(result)
+					} else {
+						return notPossibleCase
+					}
 				}
-
-				if sortedLetterInfoes[secondIdxPointer].numberOfLetter == 1 {
-					return string(append(result, sortedLetterInfoes[secondIdxPointer].letter))
-				}
-
-				return string(result)
 			}
 		}
 
@@ -57,15 +57,15 @@ func reorganizeString(S string) string {
 			if newSelectedPointer, canSelectNewIndex := selectNextPointer(sortedLetterInfoes, secondIdxPointer, firstIdxPointer); canSelectNewIndex {
 				secondIdxPointer = newSelectedPointer
 			} else {
-				if sortedLetterInfoes[firstIdxPointer].numberOfLetter > 1 {
-					return notPossibleCase
+				if sortedLetterInfoes[firstIdxPointer].numberOfLetter == 0 {
+					return string(result)
+				} else {
+					if result, canInsert := tryInsertLeftOverLettersTo(result, sortedLetterInfoes[firstIdxPointer]); canInsert {
+						return string(result)
+					} else {
+						return notPossibleCase
+					}
 				}
-
-				if sortedLetterInfoes[firstIdxPointer].numberOfLetter == 1 {
-					return string(append(result, sortedLetterInfoes[firstIdxPointer].letter))
-				}
-
-				return string(result)
 			}
 		}
 	}
@@ -124,6 +124,41 @@ func descSort(letterInfos []lettersInStringInfo) []lettersInStringInfo {
 	})
 
 	return letterInfos
+}
+
+func tryInsertLeftOverLettersTo(runes []rune, letterInfo lettersInStringInfo) (result []rune, canInsert bool) {
+	idxToInsert := 0
+
+	for letterInfo.numberOfLetter > 0 && idxToInsert <= len(runes)  {
+		if idxToInsert == len(runes) {
+			runes = append(runes, letterInfo.letter)
+			letterInfo.numberOfLetter--
+			break
+		}
+
+		if runes[idxToInsert] != letterInfo.letter {
+			if idxToInsert > 0 {
+				if runes[idxToInsert - 1] != letterInfo.letter {
+					runes = append(runes[:idxToInsert + 1], runes[idxToInsert:]...)
+					runes[idxToInsert] = letterInfo.letter
+
+					letterInfo.numberOfLetter--
+				}
+			} else {
+				runes = append([]rune{letterInfo.letter}, runes...)
+
+				letterInfo.numberOfLetter--
+			}
+		}
+
+		idxToInsert = idxToInsert + 2
+	}
+
+	if letterInfo.numberOfLetter > 0 {
+		return nil, false
+	}
+
+	return runes, true
 }
 
 type lettersInStringInfo struct {
