@@ -88,10 +88,6 @@ func selectNextPointer(letterInfos []models.LetterInfo, indexToSelect int, anoth
 	return indexToSelect, true
 }
 
-func swapRunes(runes *[]rune, firstIndex int, secondIndex int) {
-	(*runes)[firstIndex], (*runes)[secondIndex] = (*runes)[secondIndex], (*runes)[firstIndex]
-}
-
 func categorizeNumberOfEachRuneIn(runes []rune) (letterMapper map[rune]int) {
 
 	letterMapper = make(map[rune]int)

@@ -109,24 +109,6 @@ func Test_reorganizeString6(t *testing.T) {
 	})
 }
 
-func Test_swapRunes(t *testing.T) {
-	Convey("Given runes and 2 index", t, func() {
-		someString := "someString"
-		runes := []rune(someString)
-
-		firstIndexToSwap := 3
-		secondIndexToSwap := 4
-
-		Convey("When swap these 2 runes", func() {
-			swapRunes(&runes, firstIndexToSwap, secondIndexToSwap)
-
-			Convey("Then runes in both index position should be swap", func() {
-				So(string(runes), ShouldEqual, "somSetring")
-			})
-		})
-	})
-}
-
 func Test_categorizeNumberOfEachRuneIn(t *testing.T) {
 	Convey("Given string", t, func() {
 		someString := "cxmwmmm"
