@@ -1,4 +1,4 @@
-package solution
+package solutions
 
 import (
 	"github.com/nsuthison/dojo-go/problems/leetcode/medium/reorganize-string/models"

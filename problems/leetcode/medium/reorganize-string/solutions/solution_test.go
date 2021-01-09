@@ -1,4 +1,4 @@
-package solution
+package solutions
 
 import (
 	. "github.com/smartystreets/goconvey/convey"
