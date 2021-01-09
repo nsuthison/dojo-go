@@ -7,6 +7,8 @@ import (
 const notPossibleCase string = ""
 
 // Question: https://leetcode.com/problems/reorganize-string/
+
+/// Solution is that, sort it first.
 func reorganizeString(S string) string {
 
 	runes := []rune(S)

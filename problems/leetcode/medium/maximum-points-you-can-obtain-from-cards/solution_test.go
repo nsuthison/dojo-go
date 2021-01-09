@@ -1,6 +1,7 @@
 package solution
 
 import (
+	"github.com/nsuthison/dojo-go/problems/leetcode/medium/maximum-points-you-can-obtain-from-cards/models"
 	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 )
@@ -30,7 +31,7 @@ func Test_getSummationOfCardsFromFront_Should_ReturnSummationValueToSelectedCard
 			memoize := []int{1, 80, 160}
 
 			Convey("When create mapping summation of cards value starting from front", func() {
-				result := getSummationOfCardsFrom(Front, cards, numberOfCardsToSelect, &memoize)
+				result := getSummationOfCardsFrom(direction.Front, cards, numberOfCardsToSelect, &memoize)
 
 				Convey("Then it should return summation of cards score", func() {
 					So(result, ShouldEqual, 162)
@@ -56,7 +57,7 @@ func Test_getSummationOfCardsFromFront_Should_ReturnSummationValueToSelectedCard
 			memoize := make([]int, 0)
 
 			Convey("When create mapping summation of cards value starting from front", func() {
-				result := getSummationOfCardsFrom(Front, cards, numberOfCardsToSelect, &memoize)
+				result := getSummationOfCardsFrom(direction.Front, cards, numberOfCardsToSelect, &memoize)
 
 				Convey("Then it should return summation of cards score", func() {
 					So(result, ShouldEqual, 162)
@@ -86,7 +87,7 @@ func Test_getSummationOfCardsFromBack_Should_ReturnSummationValueToSelectedCards
 			memoize := []int{1, 200, 202}
 
 			Convey("When create mapping summation of cards value starting from front", func() {
-				result := getSummationOfCardsFrom(Back, cards, numberOfCardsToSelect, &memoize)
+				result := getSummationOfCardsFrom(direction.Back, cards, numberOfCardsToSelect, &memoize)
 
 				Convey("Then it should return summation of cards score", func() {
 					So(result, ShouldEqual, 204)
@@ -112,7 +113,7 @@ func Test_getSummationOfCardsFromBack_Should_ReturnSummationValueToSelectedCards
 			memoize := make([]int, 0)
 
 			Convey("When create mapping summation of cards value starting from front", func() {
-				result := getSummationOfCardsFrom(Back, cards, numberOfCardsToSelect, &memoize)
+				result := getSummationOfCardsFrom(direction.Back, cards, numberOfCardsToSelect, &memoize)
 
 				Convey("Then it should return summation of cards score", func() {
 					So(result, ShouldEqual, 204)

@@ -1,6 +1,9 @@
 package solution
 
-import . "math"
+import (
+	"github.com/nsuthison/dojo-go/problems/leetcode/medium/maximum-points-you-can-obtain-from-cards/models"
+	. "math"
+)
 
 // Question: https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/
 func maxScore(cardPoints []int, k int) int {
@@ -15,8 +18,8 @@ func maxScore(cardPoints []int, k int) int {
 
 	for numberOfCardsToTakeFromBack <= k {
 
-		sumFromFront := getSummationOfCardsFrom(Front, cardPoints, numberOfCardsToTakeFromFront, &summationMemoizeFromFront)
-		sumFromBack := getSummationOfCardsFrom(Back, cardPoints, numberOfCardsToTakeFromBack, &summationMemoizeFromBack)
+		sumFromFront := getSummationOfCardsFrom(direction.Front, cardPoints, numberOfCardsToTakeFromFront, &summationMemoizeFromFront)
+		sumFromBack := getSummationOfCardsFrom(direction.Back, cardPoints, numberOfCardsToTakeFromBack, &summationMemoizeFromBack)
 		currentSum := sumFromFront + sumFromBack
 
 		if currentSum > maxScore {
@@ -30,7 +33,7 @@ func maxScore(cardPoints []int, k int) int {
 	return maxScore
 }
 
-func getSummationOfCardsFrom(direction LinearDirection, cardPoints []int, numberOfCardsToTake int, memoize *[]int) (sumResult int) {
+func getSummationOfCardsFrom(direction direction.LinearDirection, cardPoints []int, numberOfCardsToTake int, memoize *[]int) (sumResult int) {
 
 	if numberOfCardsToTake <= 0 {
 		return 0
@@ -58,13 +61,13 @@ func getSummationOfCardsFrom(direction LinearDirection, cardPoints []int, number
 	return (*memoize)[numberOfCardsToTake-1]
 }
 
-func getPointerIndexStartingPointFrom(direction LinearDirection, arraySize int) int {
+func getPointerIndexStartingPointFrom(dir direction.LinearDirection, arraySize int) int {
 	var pointerIndexStartingPoint int
 
-	switch direction {
-	case Front:
+	switch dir {
+	case direction.Front:
 		pointerIndexStartingPoint = 0
-	case Back:
+	case direction.Back:
 		pointerIndexStartingPoint = arraySize - 1
 	}
 
