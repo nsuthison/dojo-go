@@ -9,7 +9,11 @@ const notPossibleCase string = ""
 
 // Question: https://leetcode.com/problems/reorganize-string/
 
-/// Solution is that, sort it first.
+/// Solution is that,
+/// Desc sort letter in string by its count number
+/// Then use 2 pointer from top to bottom to append letter to create result
+/// It might have left over letter from the last sorted letter array
+/// Insert left over to the result from the start of the result string by jumping each time by 2
 func reorganizeString(S string) string {
 
 	runes := []rune(S)
@@ -76,22 +80,6 @@ func reorganizeString(S string) string {
 	}
 }
 
-func haveLetterToInsertAt(idxPointer int, letterInfos []models.LetterInfo) bool {
-	return letterInfos[idxPointer].NumberOfLetter > 0
-}
-
-func trySelectNextPointerFor(indexToSelect int, letterInfos []models.LetterInfo, ownedIndex int) (newSelectedIndex int, canSelectNewIndex bool) {
-	for !haveLetterToInsertAt(indexToSelect, letterInfos) || indexToSelect == ownedIndex {
-		indexToSelect++
-
-		if indexToSelect >= len(letterInfos) {
-			return -1, false
-		}
-	}
-
-	return indexToSelect, true
-}
-
 func categorizeNumberOfEachRuneIn(runes []rune) (letterMapper map[rune]int) {
 
 	letterMapper = make(map[rune]int)
@@ -127,6 +115,22 @@ func descSort(letterInfos []models.LetterInfo) []models.LetterInfo {
 	})
 
 	return letterInfos
+}
+
+func haveLetterToInsertAt(idxPointer int, letterInfos []models.LetterInfo) bool {
+	return letterInfos[idxPointer].NumberOfLetter > 0
+}
+
+func trySelectNextPointerFor(indexToSelect int, letterInfos []models.LetterInfo, ownedIndex int) (newSelectedIndex int, canSelectNewIndex bool) {
+	for !haveLetterToInsertAt(indexToSelect, letterInfos) || indexToSelect == ownedIndex {
+		indexToSelect++
+
+		if indexToSelect >= len(letterInfos) {
+			return -1, false
+		}
+	}
+
+	return indexToSelect, true
 }
 
 func generateResultByInsertLeftOverFrom(pointerToLeftOverLetterInfo int, currentResult []rune, letterInfos []models.LetterInfo) string {
