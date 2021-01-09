@@ -22,55 +22,66 @@ func reorganizeString(S string) string {
 	letterInfos := createLetterInStringInfosFrom(letterMapper)
 	sortedLetterInfos := descSort(letterInfos)
 
-	firstIdxPointer := 0
-	secondIdxPointer := 1
-
-	result := make([]rune, 0)
-
 	if len(sortedLetterInfos) <= 1 {
 		return notPossibleCase
 	}
-	
-	for firstIdxPointer < len(sortedLetterInfos) {
-		for haveLetterToInsertAt(firstIdxPointer, sortedLetterInfos) && haveLetterToInsertAt(secondIdxPointer, sortedLetterInfos) {
 
-			result = append(result, sortedLetterInfos[firstIdxPointer].Letter)
-			result = append(result, sortedLetterInfos[secondIdxPointer].Letter)
+	currentResult := make([]rune, 0)
+
+	firstIdxPointer := 0
+	secondIdxPointer := 1
+
+	canSelectNextPointer := true
+
+	for canSelectNextPointer {
+		canSelectNextPointer = false
+
+		for haveLetterToInsertAt(firstIdxPointer, sortedLetterInfos) &&
+			haveLetterToInsertAt(secondIdxPointer, sortedLetterInfos) {
+
+			currentResult = append(currentResult, sortedLetterInfos[firstIdxPointer].Letter)
+			currentResult = append(currentResult, sortedLetterInfos[secondIdxPointer].Letter)
 
 			sortedLetterInfos[firstIdxPointer].NumberOfLetter--
 			sortedLetterInfos[secondIdxPointer].NumberOfLetter--
 		}
 
-		if sortedLetterInfos[firstIdxPointer].NumberOfLetter <= 0 {
-			newSelectedPointer, canSelectNextPointer := trySelectNextPointer(sortedLetterInfos, firstIdxPointer, secondIdxPointer)
+		if !haveLetterToInsertAt(firstIdxPointer, sortedLetterInfos) {
+			var nextSelectedPointer int
+			nextSelectedPointer, canSelectNextPointer = trySelectNextPointerFor(firstIdxPointer, sortedLetterInfos, secondIdxPointer)
 
 			if canSelectNextPointer {
-				firstIdxPointer = newSelectedPointer
-			} else {
-				return generateResult(result, sortedLetterInfos, secondIdxPointer)
+				firstIdxPointer = nextSelectedPointer
 			}
 		}
 
-		if sortedLetterInfos[secondIdxPointer].NumberOfLetter <= 0 {
-			newSelectedPointer, canSelectNextPointer := trySelectNextPointer(sortedLetterInfos, secondIdxPointer, firstIdxPointer)
+		if !haveLetterToInsertAt(secondIdxPointer, sortedLetterInfos) {
+			var nextSelectedPointer int
+			nextSelectedPointer, canSelectNextPointer = trySelectNextPointerFor(secondIdxPointer, sortedLetterInfos, firstIdxPointer)
 
 			if canSelectNextPointer {
-				secondIdxPointer = newSelectedPointer
-			} else {
-				return generateResult(result, sortedLetterInfos, firstIdxPointer)
+				secondIdxPointer = nextSelectedPointer
 			}
 		}
 	}
 
-	return string(runes)
+	if !haveLetterToInsertAt(firstIdxPointer, sortedLetterInfos) && !haveLetterToInsertAt(secondIdxPointer, sortedLetterInfos) {
+		return string(currentResult)
+	}
+
+	if haveLetterToInsertAt(firstIdxPointer, sortedLetterInfos) {
+		return generateResultByInsertLeftOverFrom(firstIdxPointer, currentResult, sortedLetterInfos)
+	} else {
+		return generateResultByInsertLeftOverFrom(secondIdxPointer, currentResult, sortedLetterInfos)
+	}
 }
 
 func haveLetterToInsertAt(idxPointer int, letterInfos []models.LetterInfo) bool {
 	return letterInfos[idxPointer].NumberOfLetter > 0
 }
 
-func trySelectNextPointer(letterInfos []models.LetterInfo, indexToSelect int, anotherIdx int) (newSelectedIndex int, canSelectNewIndex bool) {
-	for letterInfos[indexToSelect].NumberOfLetter == 0 || indexToSelect == anotherIdx {
+func trySelectNextPointerFor(indexToSelect int, letterInfos []models.LetterInfo, ownedIndex int) (newSelectedIndex int, canSelectNewIndex bool) {
+	for !haveLetterToInsertAt(indexToSelect, letterInfos) || indexToSelect == ownedIndex {
 		indexToSelect++
 
 		if indexToSelect >= len(letterInfos) {
@@ -111,30 +122,25 @@ func createLetterInStringInfosFrom(runeMap map[rune]int) []models.LetterInfo {
 }
 
 func descSort(letterInfos []models.LetterInfo) []models.LetterInfo {
-	sort.Slice(letterInfos, func(i,j int) bool {
+	sort.Slice(letterInfos, func(i, j int) bool {
 		return letterInfos[i].NumberOfLetter > letterInfos[j].NumberOfLetter
 	})
 
 	return letterInfos
 }
 
-func generateResult(currentResult []rune, letterInfos []models.LetterInfo, pointerToLeftOverLetterInfo int) string {
-
-	if letterInfos[pointerToLeftOverLetterInfo].NumberOfLetter == 0 {
-		return string(currentResult)
+func generateResultByInsertLeftOverFrom(pointerToLeftOverLetterInfo int, currentResult []rune, letterInfos []models.LetterInfo) string {
+	if result, canInsert := tryInsertLeftOverLettersTo(currentResult, letterInfos[pointerToLeftOverLetterInfo]); canInsert {
+		return string(result)
 	} else {
-		if result, canInsert := tryInsertLeftOverLettersTo(currentResult, letterInfos[pointerToLeftOverLetterInfo]); canInsert {
-			return string(result)
-		} else {
-			return notPossibleCase
-		}
+		return notPossibleCase
 	}
 }
 
 func tryInsertLeftOverLettersTo(runes []rune, letterInfo models.LetterInfo) (result []rune, canInsert bool) {
 	idxToInsert := 0
 
-	for letterInfo.NumberOfLetter > 0 && idxToInsert <= len(runes)  {
+	for letterInfo.NumberOfLetter > 0 && idxToInsert <= len(runes) {
 
 		switch idxToInsert {
 		case 0:
@@ -144,14 +150,14 @@ func tryInsertLeftOverLettersTo(runes []rune, letterInfo models.LetterInfo) (res
 				letterInfo.NumberOfLetter--
 			}
 		case len(runes):
-			if runes[idxToInsert - 1] != letterInfo.Letter {
+			if runes[idxToInsert-1] != letterInfo.Letter {
 				runes = append(runes, letterInfo.Letter)
 
 				letterInfo.NumberOfLetter--
 			}
 		default:
-			if runes[idxToInsert] != letterInfo.Letter && runes[idxToInsert - 1] != letterInfo.Letter {
-				runes = append(runes[:idxToInsert + 1], runes[idxToInsert:]...)
+			if runes[idxToInsert] != letterInfo.Letter && runes[idxToInsert-1] != letterInfo.Letter {
+				runes = append(runes[:idxToInsert+1], runes[idxToInsert:]...)
 				runes[idxToInsert] = letterInfo.Letter
 
 				letterInfo.NumberOfLetter--
