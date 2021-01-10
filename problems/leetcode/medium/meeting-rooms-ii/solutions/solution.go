@@ -8,37 +8,21 @@ import (
 // Question: https://leetcode.com/problems/meeting-rooms-ii/
 func minMeetingRooms(intervals [][]int) int {
 
-	sort.Slice(intervals, func(i, j int) bool {
-		return intervals[i][0] < intervals[j][0]
-	})
+	ascSort(&intervals)
 
 	meetingRooms := make([]MeetingRoom, 0)
 
 	for _, interval := range intervals {
+
 		toBook := TimeInterval{
 			Start: interval[0],
 			End:   interval[1],
 		}
 
-		isAbleToBook := false
-		meetingRoomIdx := 0
+		var isAbleToFindRoom bool
+		meetingRooms, isAbleToFindRoom = tryToFindRoom(toBook, meetingRooms)
 
-		for meetingRoomIdx < len(meetingRooms) && !isAbleToBook {
-
-			if meetingRoomIdx == len(meetingRooms) {
-				meetingRooms = append(meetingRooms, MeetingRoom{
-					BookedIntervals: []TimeInterval{toBook},
-				})
-
-				break
-			}
-
-			meetingRooms[meetingRoomIdx], isAbleToBook = tryBook(toBook, meetingRooms[meetingRoomIdx])
-
-			meetingRoomIdx++
-		}
-
-		if !isAbleToBook {
+		if !isAbleToFindRoom {
 			meetingRooms = append(meetingRooms, MeetingRoom{
 				BookedIntervals: []TimeInterval{toBook},
 			})
@@ -46,6 +30,12 @@ func minMeetingRooms(intervals [][]int) int {
 	}
 
 	return len(meetingRooms)
+}
+
+func ascSort(intervals *[][]int) {
+	sort.Slice(*intervals, func(i, j int) bool {
+		return (*intervals)[i][0] < (*intervals)[j][0]
+	})
 }
 
 func tryBook(toBook TimeInterval, meetingRoom MeetingRoom) (result MeetingRoom, canBook bool) {
@@ -77,4 +67,17 @@ func tryBook(toBook TimeInterval, meetingRoom MeetingRoom) (result MeetingRoom, 
 	}
 
 	return meetingRoom, false
+}
+
+func tryToFindRoom(toBook TimeInterval, meetingRooms []MeetingRoom) (result []MeetingRoom, canBook bool) {
+	meetingRoomIdx := 0
+	isAbleToBook := false
+
+	for meetingRoomIdx < len(meetingRooms) && !isAbleToBook {
+		meetingRooms[meetingRoomIdx], isAbleToBook = tryBook(toBook, meetingRooms[meetingRoomIdx])
+
+		meetingRoomIdx++
+	}
+
+	return meetingRooms, isAbleToBook
 }
