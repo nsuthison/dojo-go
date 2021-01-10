@@ -1,6 +1,9 @@
 package solutions
 
-import "sort"
+import (
+	. "github.com/nsuthison/dojo-go/problems/leetcode/medium/meeting-rooms-ii/models"
+	"sort"
+)
 
 // Question: https://leetcode.com/problems/meeting-rooms-ii/
 func minMeetingRooms(intervals [][]int) int {
@@ -24,7 +27,7 @@ func minMeetingRooms(intervals [][]int) int {
 
 			if meetingRoomIdx == len(meetingRooms) {
 				meetingRooms = append(meetingRooms, MeetingRoom{
-					[]TimeInterval{toBook},
+					BookedIntervals: []TimeInterval{toBook},
 				})
 
 				break
@@ -37,7 +40,7 @@ func minMeetingRooms(intervals [][]int) int {
 
 		if !isAbleToBook {
 			meetingRooms = append(meetingRooms, MeetingRoom{
-				[]TimeInterval{toBook},
+				BookedIntervals: []TimeInterval{toBook},
 			})
 		}
 	}
@@ -74,25 +77,4 @@ func tryBook(toBook TimeInterval, meetingRoom MeetingRoom) (result MeetingRoom, 
 	}
 
 	return meetingRoom, false
-}
-
-type TimeInterval struct {
-	Start int
-	End   int
-}
-
-func (currentTimeInterval *TimeInterval) IsBefore(anotherInterval TimeInterval) bool {
-	return currentTimeInterval.End <= anotherInterval.Start
-}
-
-func (currentTimeInterval *TimeInterval) IsAfter(anotherInterval TimeInterval) bool {
-	return currentTimeInterval.Start >= anotherInterval.End
-}
-
-func (currentTimeInterval *TimeInterval) IsBetween(firstInterval TimeInterval, secondInterval TimeInterval) bool {
-	return currentTimeInterval.IsAfter(firstInterval) && currentTimeInterval.IsBefore(secondInterval)
-}
-
-type MeetingRoom struct {
-	BookedIntervals []TimeInterval
 }
