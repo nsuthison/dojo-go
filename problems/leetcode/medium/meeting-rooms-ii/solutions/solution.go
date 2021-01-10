@@ -1,7 +1,13 @@
 package solutions
 
+import "sort"
+
 // Question: https://leetcode.com/problems/meeting-rooms-ii/
 func minMeetingRooms(intervals [][]int) int {
+
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][0] < intervals[j][0]
+	})
 
 	meetingRooms := make([]MeetingRoom, 0)
 
