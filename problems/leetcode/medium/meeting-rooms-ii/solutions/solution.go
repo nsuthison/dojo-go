@@ -19,13 +19,11 @@ func minMeetingRooms(intervals [][]int) int {
 			End:   interval[1],
 		}
 
-		var isAbleToFindRoom bool
-		meetingRooms, isAbleToFindRoom = tryToFindRoom(toBook, meetingRooms)
+		var isAbleToBook bool
+		meetingRooms, isAbleToBook = tryToFindRoomAndBookWith(toBook, meetingRooms)
 
-		if !isAbleToFindRoom {
-			meetingRooms = append(meetingRooms, MeetingRoom{
-				BookedIntervals: []TimeInterval{toBook},
-			})
+		if !isAbleToBook {
+			meetingRooms = createNewMeetingRoomAndBookWith(toBook, meetingRooms)
 		}
 	}
 
@@ -36,6 +34,19 @@ func ascSort(intervals *[][]int) {
 	sort.Slice(*intervals, func(i, j int) bool {
 		return (*intervals)[i][0] < (*intervals)[j][0]
 	})
+}
+
+func tryToFindRoomAndBookWith(toBook TimeInterval, meetingRooms []MeetingRoom) (result []MeetingRoom, canBook bool) {
+	meetingRoomIdx := 0
+	isAbleToBook := false
+
+	for meetingRoomIdx < len(meetingRooms) && !isAbleToBook {
+		meetingRooms[meetingRoomIdx], isAbleToBook = tryBook(toBook, meetingRooms[meetingRoomIdx])
+
+		meetingRoomIdx++
+	}
+
+	return meetingRooms, isAbleToBook
 }
 
 func tryBook(toBook TimeInterval, meetingRoom MeetingRoom) (result MeetingRoom, canBook bool) {
@@ -69,15 +80,8 @@ func tryBook(toBook TimeInterval, meetingRoom MeetingRoom) (result MeetingRoom, 
 	return meetingRoom, false
 }
 
-func tryToFindRoom(toBook TimeInterval, meetingRooms []MeetingRoom) (result []MeetingRoom, canBook bool) {
-	meetingRoomIdx := 0
-	isAbleToBook := false
-
-	for meetingRoomIdx < len(meetingRooms) && !isAbleToBook {
-		meetingRooms[meetingRoomIdx], isAbleToBook = tryBook(toBook, meetingRooms[meetingRoomIdx])
-
-		meetingRoomIdx++
-	}
-
-	return meetingRooms, isAbleToBook
+func createNewMeetingRoomAndBookWith(toBook TimeInterval, meetingRooms []MeetingRoom) []MeetingRoom {
+	return append(meetingRooms, MeetingRoom{
+		BookedIntervals: []TimeInterval{toBook},
+	})
 }
