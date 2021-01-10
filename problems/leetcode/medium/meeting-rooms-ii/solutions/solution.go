@@ -1,5 +1,6 @@
 package solutions
 
+// Question: https://leetcode.com/problems/meeting-rooms-ii/
 func minMeetingRooms(intervals [][]int) int {
 
 	meetingRooms := make([]MeetingRoom, 0)
