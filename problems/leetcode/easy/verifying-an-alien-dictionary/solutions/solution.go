@@ -1,13 +1,17 @@
 package solutions
 
 func isAlienSorted(words []string, order string) bool {
-	//letterOrderMapping := createLetterOrderMappingFrom(order)
-	//
-	//for i := 0; i < len(words); i++ {
-	//
-	//}
+	letterOrderMappingRule := createLetterOrderMappingRuleFrom(order)
 
-	return false
+	for i := 0; i < len(words) - 1; i++ {
+		isLeftWordLesserThanRight := isLeftWordLesserThanRight(words[i], words[i + 1], letterOrderMappingRule)
+
+		if !isLeftWordLesserThanRight {
+			return false
+		}
+	}
+
+	return true
 }
 
 func isLeftWordLesserThanRight(leftWord string, rightWord string, orderRule map[rune]int) bool {
@@ -37,7 +41,7 @@ func isLeftWordLesserThanRight(leftWord string, rightWord string, orderRule map[
 	return true
 }
 
-func createLetterOrderMappingFrom(order string) map[rune]int {
+func createLetterOrderMappingRuleFrom(order string) map[rune]int {
 
 	letterOrderMapping := make(map[rune]int)
 	for idx, letter := range order {
