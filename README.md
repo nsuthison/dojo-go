@@ -1,1 +1,3 @@
-# dojo-go
+# Dojo-Go
+
+Dojo for golang practicing.
