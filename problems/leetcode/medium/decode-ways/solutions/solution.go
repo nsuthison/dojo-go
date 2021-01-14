@@ -53,26 +53,22 @@ func nextTailInfo(previousTailInfos map[int]int, toAppend int) (nextTailInfo map
 
 	for number, count := range previousTailInfos {
 
-		if toAppend == 0 {
-			if isBeAbleToCombine(number, toAppend) {
-				combine := (number * 10) + toAppend
-
-				nextTailInfo[combine] = nextTailInfo[combine] + count
-			} else {
-				continue
-			}
-		} else {
+		if toAppend != 0 {
 			nextTailInfo[toAppend] = nextTailInfo[toAppend] + count
+		}
 
-			if isBeAbleToCombine(number, toAppend) {
-				combine := (number * 10) + toAppend
+		if isBeAbleToCombine(number, toAppend) {
 
-				nextTailInfo[combine] = nextTailInfo[combine] + count
-			}
+			combine := createCombine(number, toAppend)
+			nextTailInfo[combine] = nextTailInfo[combine] + count
 		}
 	}
 
 	return nextTailInfo
+}
+
+func createCombine(tens int, ones int) int {
+	return (tens * 10) + ones
 }
 
 func isBeAbleToCombine(head int, tail int) bool {
