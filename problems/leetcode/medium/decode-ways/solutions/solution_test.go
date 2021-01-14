@@ -16,10 +16,10 @@ var numDecodingsTestCases = []struct {
 	{"10011", 0},
 }
 
-func Test_smt(t *testing.T) {
-	result := numDecodings("111111111111111111111111111111111111111111111")
-	So(result, ShouldEqual, 10)
-}
+//func Test_smt(t *testing.T) {
+//	result := numDecodings("2101")
+//	So(result, ShouldEqual, 10)
+//}
 
 func Test_numDecodings(t *testing.T) {
 	for _, testCase := range numDecodingsTestCases {

@@ -2,29 +2,92 @@ package solutions
 
 import "strconv"
 
+//func numDecodings(s string) int {
+//
+//	tails := make([]int, 0)
+//	hasNumber := false
+//	isLegit := true
+//
+//	for _, runeDigit := range s {
+//
+//		digit, _ := strconv.Atoi(string(runeDigit))
+//
+//		if !hasNumber && digit == 0 {
+//			continue
+//		}
+//
+//		hasNumber = true
+//
+//		tails, isLegit = nextTails(tails, digit)
+//		if !isLegit {
+//			return 0
+//		}
+//	}
+//
+//	return len(tails)
+//}
+
 func numDecodings(s string) int {
 
-	tails := make([]int, 0)
-	hasNumber := false
-	isLegit := true
+	previousTailInfos := make(map[int]int, 0)
 
-	for _, runeDigit := range s {
+	for idx, runeDigit := range s {
 
 		digit, _ := strconv.Atoi(string(runeDigit))
 
-		if !hasNumber && digit == 0 {
-			continue
+		if idx == 0 && digit == 0 {
+			return 0
 		}
 
-		hasNumber = true
+		if idx > 0 {
+			previousDigit, _ := strconv.Atoi(string(s[idx - 1]))
 
-		tails, isLegit = nextTails(tails, digit)
-		if !isLegit {
-			return 0
+			if (previousDigit == 0 || previousDigit > 2) && digit == 0 {
+				return 0
+			}
+		}
+
+		previousTailInfos = nextTailInfo(previousTailInfos, digit)
+	}
+
+	var result int
+	for _, count := range previousTailInfos {
+		result += count
+	}
+
+	return result
+}
+
+func nextTailInfo(previousTailInfos map[int]int, toAppend int) (nextTailInfo map[int]int) {
+
+	nextTailInfo = make(map[int]int, 0)
+
+	if len(previousTailInfos) == 0 {
+		nextTailInfo[toAppend] = 1
+	}
+
+	for number, count := range previousTailInfos {
+
+		if toAppend == 0 {
+			if isBeAbleToCombine(number, toAppend) {
+				combine := (number * 10) + toAppend
+
+				nextTailInfo[combine] = nextTailInfo[combine] + count
+			} else {
+				continue
+			}
+		} else {
+			nextTailInfo[toAppend] = nextTailInfo[toAppend] + count
+
+			if isBeAbleToCombine(number, toAppend) {
+				combine := (number * 10) + toAppend
+
+				nextTailInfo[combine] = nextTailInfo[combine] + count
+			}
 		}
 	}
 
-	return len(tails)
+	return nextTailInfo
 }
 
 func nextTails(tails []int, toAppend int) (result []int, isAbleToGet bool) {
@@ -77,4 +140,3 @@ func isBeAbleToCombine(head int, tail int) bool {
 
 	return false
 }
-
