@@ -21,16 +21,34 @@ func Test_Push(t *testing.T) {
 	})
 }
 
-func Test_Pop(t *testing.T) {
+func Test_Pop_SuccessCase(t *testing.T) {
 	Convey("Given stack with element", t, func() {
-		stack := Stack{14, 7}
+		stack := Stack{14, 3, 7}
 
-		Convey("When push element to stack", func() {
+		Convey("When pop element from stack", func() {
 			pop, canPop := stack.Pop()
 
-			Convey("Then last element of stack should be the element that just push to stack", func() {
-				So(canPop, ShouldEqual, true)
+			Convey("Then it should return last element from stack", func() {
+				So(canPop, ShouldBeTrue)
+
 				So(pop, ShouldEqual, 7)
+				So(len(stack), ShouldEqual, 2)
+				So(stack[0], ShouldEqual, 14)
+				So(stack[1], ShouldEqual, 3)
+			})
+		})
+	})
+}
+
+func Test_Pop_FailCase(t *testing.T) {
+	Convey("Given empty stack", t, func() {
+		stack := Stack{}
+
+		Convey("When pop element from stack", func() {
+			_, canPop := stack.Pop()
+
+			Convey("Then canPop should be fault", func() {
+				So(canPop, ShouldBeFalse)
 			})
 		})
 	})
