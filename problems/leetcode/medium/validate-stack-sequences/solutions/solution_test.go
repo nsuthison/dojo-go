@@ -6,6 +6,36 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
+var validateStackSequencesTestCases = []struct {
+	pushed         []int
+	popped         []int
+	expectedResult bool
+}{
+	{[]int{1, 2, 3, 4, 5}, []int{4, 5, 3, 2, 1}, true},
+	{[]int{1, 2, 3, 4, 5}, []int{4, 3, 5, 1, 2}, false},
+}
+
+func Test_validateStackSequences(t *testing.T) {
+	for _, testCase := range validateStackSequencesTestCases {
+		t.Run("validateStackSequences", func(t *testing.T) {
+			Convey("Given push and pop", t, func() {
+
+				pushed := testCase.pushed
+				popped := testCase.popped
+
+				Convey("When validate stack sequence", func() {
+
+					isStackSequenceValid := validateStackSequences(pushed, popped)
+
+					Convey("Then the result should reflect whether pushed and popped are valid", func() {
+						So(isStackSequenceValid, ShouldEqual, testCase.expectedResult)
+					})
+				})
+			})
+		})
+	}
+}
+
 func Test_Push(t *testing.T) {
 	Convey("Given stack and element to push", t, func() {
 		stack := make(Stack, 0)
