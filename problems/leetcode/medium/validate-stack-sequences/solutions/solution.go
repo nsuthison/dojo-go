@@ -13,7 +13,11 @@ func validateStackSequences(pushed []int, popped []int) bool {
 			stack.Pop()
 			idxPop++
 
-			topElementInStack, _ = stack.Peek()
+			if len(stack) > 0 {
+				topElementInStack, _ = stack.Peek()
+			} else {
+				break
+			}
 		}
 	}
 
@@ -50,7 +54,7 @@ func (stack *Stack) Pop() (result int, canPop bool) {
 // Peek top element in stack
 func (stack *Stack) Peek() (result int, canPeek bool) {
 	if len(*stack) <= 0 {
-		return 0, false
+		return -1, false
 	}
 
 	return (*stack)[len(*stack)-1], true

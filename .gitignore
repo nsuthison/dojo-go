@@ -19,3 +19,6 @@
 
 # OS file
 .DS_Store
+
+# vscode
+.vscode
