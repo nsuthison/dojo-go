@@ -1,5 +1,7 @@
 package solutions
 
+import . "github.com/nsuthison/dojo-go/problems/leetcode/medium/validate-stack-sequences/models"
+
 func validateStackSequences(pushed []int, popped []int) bool {
 
 	stack := make(Stack, 0)
@@ -23,39 +25,7 @@ func validateStackSequences(pushed []int, popped []int) bool {
 
 	if idxPop == len(popped) {
 		return true
+	} else {
+		return false
 	}
-
-	return false
-}
-
-// Stack is stack
-type Stack []int
-
-// Push element to stack
-func (stack *Stack) Push(toPush int) {
-	*stack = append(*stack, toPush)
-}
-
-// Pop element from stack
-func (stack *Stack) Pop() (result int, canPop bool) {
-
-	if len(*stack) <= 0 {
-		return 0, false
-	}
-
-	lastIndex := len(*stack) - 1
-
-	result = (*stack)[lastIndex]
-	*stack = (*stack)[:lastIndex]
-
-	return result, true
-}
-
-// Peek top element in stack
-func (stack *Stack) Peek() (result int, canPeek bool) {
-	if len(*stack) <= 0 {
-		return -1, false
-	}
-
-	return (*stack)[len(*stack)-1], true
 }
