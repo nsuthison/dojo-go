@@ -5,21 +5,20 @@ import "strconv"
 // Question: https://leetcode.com/problems/decode-ways/
 func numDecodings(s string) int {
 
-	previousTailInfos := make(map[int]int, 0)
+	previousTailInfo := make(map[int]int, 0)
 
 	for idx, runeDigit := range s {
-
-		digit, _ := strconv.Atoi(string(runeDigit))
 
 		if !isAbleToDecode(idx, s) {
 			return 0
 		}
 
-		previousTailInfos = nextTailInfo(previousTailInfos, digit)
+		currentDigit, _ := strconv.Atoi(string(runeDigit))
+		previousTailInfo = nextTailInfo(previousTailInfo, currentDigit)
 	}
 
 	var result int
-	for _, count := range previousTailInfos {
+	for _, count := range previousTailInfo {
 		result += count
 	}
 
