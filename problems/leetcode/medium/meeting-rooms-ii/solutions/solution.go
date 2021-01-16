@@ -1,8 +1,9 @@
 package solutions
 
 import (
-	. "github.com/nsuthison/dojo-go/problems/leetcode/medium/meeting-rooms-ii/models"
 	"sort"
+
+	. "github.com/nsuthison/dojo-go/problems/leetcode/medium/meeting-rooms-ii/models"
 )
 
 // Question: https://leetcode.com/problems/meeting-rooms-ii/
