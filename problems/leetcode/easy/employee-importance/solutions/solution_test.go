@@ -30,8 +30,19 @@ var getImportanceTestCases = []struct {
 				Subordinates: []int{},
 			},
 		},
-		id:             3,
+		id:             1,
 		expectedResult: 11,
+	},
+	{
+		employees: []*Employee{
+			{
+				Id:           2,
+				Importance:   5,
+				Subordinates: []int{},
+			},
+		},
+		id:             2,
+		expectedResult: 5,
 	},
 }
 
