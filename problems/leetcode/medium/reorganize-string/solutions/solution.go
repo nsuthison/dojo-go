@@ -1,8 +1,9 @@
 package solutions
 
 import (
-	"github.com/nsuthison/dojo-go/problems/leetcode/medium/reorganize-string/models"
 	"sort"
+
+	"github.com/nsuthison/dojo-go/problems/leetcode/medium/reorganize-string/models"
 )
 
 const notPossibleCase string = ""
@@ -67,14 +68,10 @@ func reorganizeString(S string) string {
 		}
 	}
 
-	if !haveLetterToInsertAt(firstIdxPointer, sortedLetterInfos) && !haveLetterToInsertAt(secondIdxPointer, sortedLetterInfos) {
-		return string(currentResult)
-	}
-
-	if haveLetterToInsertAt(firstIdxPointer, sortedLetterInfos) {
-		return generateResultByInsertLeftOverFrom(firstIdxPointer, currentResult, sortedLetterInfos)
+	if haveLeftOverIn(sortedLetterInfos, firstIdxPointer, secondIdxPointer) {
+		return generateResultByInsertLeftOverTo(currentResult, sortedLetterInfos, firstIdxPointer, secondIdxPointer)
 	} else {
-		return generateResultByInsertLeftOverFrom(secondIdxPointer, currentResult, sortedLetterInfos)
+		return string(currentResult)
 	}
 }
 
@@ -129,6 +126,24 @@ func trySelectNextPointerFor(indexToSelect int, letterInfos []models.LetterInfo,
 	}
 
 	return indexToSelect, true
+}
+
+func haveLeftOverIn(letterInfos []models.LetterInfo, indices ...int) bool {
+	for _, index := range indices {
+		if haveLetterToInsertAt(index, letterInfos) {
+			return true
+		}
+	}
+
+	return false
+}
+
+func generateResultByInsertLeftOverTo(currentResult []rune, letterInfos []models.LetterInfo, firstIndex int, secondIndex int) string {
+	if haveLetterToInsertAt(firstIndex, letterInfos) {
+		return generateResultByInsertLeftOverFrom(firstIndex, currentResult, letterInfos)
+	} else {
+		return generateResultByInsertLeftOverFrom(secondIndex, currentResult, letterInfos)
+	}
 }
 
 func generateResultByInsertLeftOverFrom(pointerToLeftOverLetterInfo int, currentResult []rune, letterInfos []models.LetterInfo) string {
