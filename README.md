@@ -1,6 +1,5 @@
 # Dojo-Go
 
-![build](https://github.com/nsuthison/dojo-go/workflows/build-and-test/badge.svg)
-![test](https://github.com/nsuthison/dojo-go/workflows/build-and-test/badge.svg)
+![status-main](https://github.com/nsuthison/dojo-go/workflows/status-main/badge.svg?branch=main)
 
 Dojo for golang practicing.
