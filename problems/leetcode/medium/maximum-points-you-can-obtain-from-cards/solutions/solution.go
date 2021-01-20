@@ -1,8 +1,9 @@
 package solutions
 
 import (
-	"github.com/nsuthison/dojo-go/problems/leetcode/medium/maximum-points-you-can-obtain-from-cards/models"
-	. "math"
+	"math"
+
+	direction "github.com/nsuthison/dojo-go/problems/leetcode/medium/maximum-points-you-can-obtain-from-cards/models"
 )
 
 // Question: https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/
@@ -52,7 +53,7 @@ func getSummationOfCardsFrom(direction direction.LinearDirection, cardPoints []i
 			}
 
 			lastSummationInMemoize := (*memoize)[i-1]
-			nextCardValueToCalculate := cardPoints[int(Abs(float64(pointerIndexStartingPoint-i)))]
+			nextCardValueToCalculate := cardPoints[int(math.Abs(float64(pointerIndexStartingPoint-i)))]
 
 			*memoize = append(*memoize, lastSummationInMemoize+nextCardValueToCalculate)
 		}

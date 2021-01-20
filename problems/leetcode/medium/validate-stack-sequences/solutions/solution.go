@@ -1,10 +1,10 @@
 package solutions
 
-import . "github.com/nsuthison/dojo-go/problems/leetcode/medium/validate-stack-sequences/models"
+import models "github.com/nsuthison/dojo-go/problems/leetcode/medium/validate-stack-sequences/models"
 
 func validateStackSequences(pushed []int, popped []int) bool {
 
-	stack := make(Stack, 0)
+	stack := make(models.Stack, 0)
 	idxPop := 0
 
 	for idxPush := 0; idxPush < len(pushed); idxPush++ {
@@ -25,7 +25,7 @@ func validateStackSequences(pushed []int, popped []int) bool {
 
 	if idxPop == len(popped) {
 		return true
-	} else {
-		return false
 	}
+
+	return false
 }

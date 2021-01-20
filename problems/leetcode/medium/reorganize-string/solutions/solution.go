@@ -70,9 +70,9 @@ func reorganizeString(S string) string {
 
 	if haveLeftOverIn(sortedLetterInfos, firstIdxPointer, secondIdxPointer) {
 		return generateResultByInsertLeftOverTo(currentResult, sortedLetterInfos, firstIdxPointer, secondIdxPointer)
-	} else {
-		return string(currentResult)
 	}
+
+	return string(currentResult)
 }
 
 func categorizeNumberOfEachRuneIn(runes []rune) (letterMapper map[rune]int) {
@@ -141,17 +141,17 @@ func haveLeftOverIn(letterInfos []models.LetterInfo, indices ...int) bool {
 func generateResultByInsertLeftOverTo(currentResult []rune, letterInfos []models.LetterInfo, firstIndex int, secondIndex int) string {
 	if haveLetterToInsertAt(firstIndex, letterInfos) {
 		return generateResultByInsertLeftOverFrom(firstIndex, currentResult, letterInfos)
-	} else {
-		return generateResultByInsertLeftOverFrom(secondIndex, currentResult, letterInfos)
 	}
+
+	return generateResultByInsertLeftOverFrom(secondIndex, currentResult, letterInfos)
 }
 
 func generateResultByInsertLeftOverFrom(pointerToLeftOverLetterInfo int, currentResult []rune, letterInfos []models.LetterInfo) string {
 	if result, canInsert := tryInsertLeftOverLettersTo(currentResult, letterInfos[pointerToLeftOverLetterInfo]); canInsert {
 		return string(result)
-	} else {
-		return notPossibleCase
 	}
+
+	return notPossibleCase
 }
 
 func tryInsertLeftOverLettersTo(runes []rune, letterInfo models.LetterInfo) (result []rune, canInsert bool) {

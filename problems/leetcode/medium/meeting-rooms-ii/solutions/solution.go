@@ -3,7 +3,7 @@ package solutions
 import (
 	"sort"
 
-	. "github.com/nsuthison/dojo-go/problems/leetcode/medium/meeting-rooms-ii/models"
+	models "github.com/nsuthison/dojo-go/problems/leetcode/medium/meeting-rooms-ii/models"
 )
 
 // Question: https://leetcode.com/problems/meeting-rooms-ii/
@@ -11,11 +11,11 @@ func minMeetingRooms(intervals [][]int) int {
 
 	ascSort(&intervals)
 
-	meetingRooms := make([]MeetingRoom, 0)
+	meetingRooms := make([]models.MeetingRoom, 0)
 
 	for _, interval := range intervals {
 
-		toBook := TimeInterval{
+		toBook := models.TimeInterval{
 			Start: interval[0],
 			End:   interval[1],
 		}
@@ -37,7 +37,7 @@ func ascSort(intervals *[][]int) {
 	})
 }
 
-func tryToFindRoomAndBookWith(toBook TimeInterval, meetingRooms []MeetingRoom) (result []MeetingRoom, canBook bool) {
+func tryToFindRoomAndBookWith(toBook models.TimeInterval, meetingRooms []models.MeetingRoom) (result []models.MeetingRoom, canBook bool) {
 	meetingRoomIdx := 0
 	isAbleToBook := false
 
@@ -50,7 +50,7 @@ func tryToFindRoomAndBookWith(toBook TimeInterval, meetingRooms []MeetingRoom) (
 	return meetingRooms, isAbleToBook
 }
 
-func tryBook(toBook TimeInterval, meetingRoom MeetingRoom) (result MeetingRoom, canBook bool) {
+func tryBook(toBook models.TimeInterval, meetingRoom models.MeetingRoom) (result models.MeetingRoom, canBook bool) {
 
 	booked := &meetingRoom.BookedIntervals
 	for idx := 0; idx <= len(*booked); idx++ {
@@ -58,7 +58,7 @@ func tryBook(toBook TimeInterval, meetingRoom MeetingRoom) (result MeetingRoom, 
 		switch idx {
 		case 0:
 			if toBook.IsBefore((*booked)[idx]) {
-				*booked = append([]TimeInterval{toBook}, *booked...)
+				*booked = append([]models.TimeInterval{toBook}, *booked...)
 
 				return meetingRoom, true
 			}
@@ -81,8 +81,8 @@ func tryBook(toBook TimeInterval, meetingRoom MeetingRoom) (result MeetingRoom, 
 	return meetingRoom, false
 }
 
-func createNewMeetingRoomAndBookWith(toBook TimeInterval, meetingRooms []MeetingRoom) []MeetingRoom {
-	return append(meetingRooms, MeetingRoom{
-		BookedIntervals: []TimeInterval{toBook},
+func createNewMeetingRoomAndBookWith(toBook models.TimeInterval, meetingRooms []models.MeetingRoom) []models.MeetingRoom {
+	return append(meetingRooms, models.MeetingRoom{
+		BookedIntervals: []models.TimeInterval{toBook},
 	})
 }

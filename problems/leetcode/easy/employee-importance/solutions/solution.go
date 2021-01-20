@@ -1,11 +1,11 @@
 package solutions
 
 import (
-	. "github.com/nsuthison/dojo-go/problems/leetcode/easy/employee-importance/models"
+	models "github.com/nsuthison/dojo-go/problems/leetcode/easy/employee-importance/models"
 )
 
 // Question: https://leetcode.com/problems/employee-importance/
-func getImportance(employees []*Employee, id int) int {
+func getImportance(employees []*models.Employee, id int) int {
 	emplyeesMap := createEmployeeMapFrom(employees)
 
 	toFind, _ := emplyeesMap[id]
@@ -14,7 +14,7 @@ func getImportance(employees []*Employee, id int) int {
 	return getSumImportanceFrom(toFind, emplyeesMap, sumImportancePointsMemoize)
 }
 
-func getSumImportanceFrom(employee Employee, employeesMap map[int]Employee, sumImportancePointsMemoize map[int]int) int {
+func getSumImportanceFrom(employee models.Employee, employeesMap map[int]models.Employee, sumImportancePointsMemoize map[int]int) int {
 
 	sumPoints, isExist := sumImportancePointsMemoize[employee.Id]
 	if !isExist {
@@ -33,9 +33,9 @@ func getSumImportanceFrom(employee Employee, employeesMap map[int]Employee, sumI
 	return sumPoints
 }
 
-func createEmployeeMapFrom(employees []*Employee) (employeeMap map[int]Employee) {
+func createEmployeeMapFrom(employees []*models.Employee) (employeeMap map[int]models.Employee) {
 
-	employeeMap = make(map[int]Employee)
+	employeeMap = make(map[int]models.Employee)
 
 	for _, employee := range employees {
 		employeeMap[employee.Id] = *employee
