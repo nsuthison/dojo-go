@@ -33,7 +33,7 @@ func isAbleToDecode(currentIdx int, input string) bool {
 	}
 
 	if currentIdx > 0 {
-		previousDigit, _ := strconv.Atoi(string(input[currentIdx - 1]))
+		previousDigit, _ := strconv.Atoi(string(input[currentIdx-1]))
 
 		if (previousDigit == 0 || previousDigit > 2) && currentDigit == 0 {
 			return false

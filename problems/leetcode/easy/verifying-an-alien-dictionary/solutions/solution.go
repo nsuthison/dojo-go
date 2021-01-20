@@ -4,8 +4,8 @@ package solutions
 func isAlienSorted(words []string, order string) bool {
 	letterOrderMappingRule := createLetterOrderMappingRuleFrom(order)
 
-	for i := 0; i < len(words) - 1; i++ {
-		isLeftWordLesserThanRight := isLeftWordLesserThanRight(words[i], words[i + 1], letterOrderMappingRule)
+	for i := 0; i < len(words)-1; i++ {
+		isLeftWordLesserThanRight := isLeftWordLesserThanRight(words[i], words[i+1], letterOrderMappingRule)
 
 		if !isLeftWordLesserThanRight {
 			return false
@@ -38,7 +38,7 @@ func isLeftWordLesserThanRight(leftWord string, rightWord string, orderRule map[
 			continue
 		}
 	}
-	
+
 	return true
 }
 

@@ -11,8 +11,8 @@ var isAlienSortedTestCases = []struct {
 	expectedResult  bool
 }{
 	{[]string{"hello", "leetcode"}, "hlabcdefgijkmnopqrstuvwxyz", true},
-	{[]string{"word","world","row"}, "worldabcefghijkmnpqstuvxyz", false},
-	{[]string{"apple","app"}, "abcdefghijklmnopqrstuvwxyz", false},
+	{[]string{"word", "world", "row"}, "worldabcefghijkmnpqstuvxyz", false},
+	{[]string{"apple", "app"}, "abcdefghijklmnopqrstuvwxyz", false},
 }
 
 func Test_isAlienSorted(t *testing.T) {

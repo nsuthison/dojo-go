@@ -9,8 +9,8 @@ var numDecodingsTestCases = []struct {
 	input          string
 	expectedResult int
 }{
-	{"12",2},
-	{"226",3},
+	{"12", 2},
+	{"226", 3},
 	{"0", 0},
 	{"2101", 1},
 	{"10011", 0},

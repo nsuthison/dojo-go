@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-var reorganizeStringSuccessCaseTestCases = []struct{
+var reorganizeStringSuccessCaseTestCases = []struct {
 	input string
 }{
 	{"aab"},
@@ -15,7 +15,7 @@ var reorganizeStringSuccessCaseTestCases = []struct{
 	{"tndsewnllhrtwsvxenkscbivijfqnysamckzoyfnapuotmdexzkkrpmppttficzerdndssuveompqkemtbwbodrhwsfpbmkafpwyedpcowruntvymxtyyejqtajkcjakghtdwmuygecjncxzcxezgecrxonnszmqmecgvqqkdagvaaucewelchsmebikscciegzoiamovdojrmmwgbxeygibxxltemfgpogjkhobmhwquizuwvhfaiavsxhiknysdghcawcrphaykyashchyomklvghkyabxatmrkmrfsppfhgrwywtlxebgzmevefcqquvhvgounldxkdzndwybxhtycmlybhaaqvodntsvfhwcuhvuccwcsxelafyzushjhfyklvghpfvknprfouevsxmcuhiiiewcluehpmzrjzffnrptwbuhnyahrbzqvirvmffbxvrmynfcnupnukayjghpusewdwrbkhvjnveuiionefmnfxao"},
 }
 
-var reorganizeStringFailCaseTestCases = []struct{
+var reorganizeStringFailCaseTestCases = []struct {
 	input string
 }{
 	{"bbbbbbb"},
@@ -23,7 +23,7 @@ var reorganizeStringFailCaseTestCases = []struct{
 
 func Test_reorganizeString_SuccessCase(t *testing.T) {
 	for _, testCase := range reorganizeStringSuccessCaseTestCases {
-		t.Run("reorganizeStringSuccessCase", func(t *testing.T){
+		t.Run("reorganizeStringSuccessCase", func(t *testing.T) {
 			Convey("Given some random string", t, func() {
 				input := testCase.input
 
@@ -45,7 +45,7 @@ func Test_reorganizeString_SuccessCase(t *testing.T) {
 
 func Test_reorganizeString_FailCase(t *testing.T) {
 	for _, testCase := range reorganizeStringFailCaseTestCases {
-		t.Run("reorganizeStringFailCase", func(t *testing.T){
+		t.Run("reorganizeStringFailCase", func(t *testing.T) {
 			Convey("Given some random string", t, func() {
 				input := testCase.input
 

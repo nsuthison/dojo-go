@@ -53,4 +53,3 @@ func Test_Pop_FailCase(t *testing.T) {
 		})
 	})
 }
-
