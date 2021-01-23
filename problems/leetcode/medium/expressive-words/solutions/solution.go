@@ -29,7 +29,9 @@ func createStretchyMap(word string) []StretchyMap {
 			repeatLetterCount = 1
 		}
 
-		previousLetter = rune(word[idx])
+		if idx < len(word) {
+			previousLetter = rune(word[idx])
+		}
 	}
 
 	return stretchMap
