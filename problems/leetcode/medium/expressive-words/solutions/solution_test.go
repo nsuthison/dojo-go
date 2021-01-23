@@ -38,11 +38,11 @@ func Test_createStretchyMap(t *testing.T) {
 
 		someString := "heeellooo"
 
-		Convey("", func() {
+		Convey("When create stretchyInfos", func() {
 
-			stretchyMap := createStretchyMap(someString)
+			stretchyMap := createStretchyInfos(someString)
 
-			Convey("", func() {
+			Convey("Then it should create stretchyInfos in order", func() {
 				So(stretchyMap[0].Letter, ShouldEqual, 'h')
 				So(stretchyMap[0].IsStretchy, ShouldEqual, false)
 
@@ -57,6 +57,23 @@ func Test_createStretchyMap(t *testing.T) {
 
 				So(stretchyMap[4].Letter, ShouldEqual, 'o')
 				So(stretchyMap[4].IsStretchy, ShouldEqual, true)
+			})
+		})
+	})
+}
+
+func Test_isWordStretchy(t *testing.T) {
+	Convey("Given stretchyInfos and string which valid to the infos", t, func() {
+
+		someString := "hello"
+		stretchyInfos := createStretchyInfos("heeellooo")
+
+		Convey("When check if the given word is stretchy", func() {
+
+			isWordStretchy := isWordStretchy(someString, stretchyInfos)
+
+			Convey("Then result should be true", func() {
+				So(isWordStretchy, ShouldBeTrue)
 			})
 		})
 	})
