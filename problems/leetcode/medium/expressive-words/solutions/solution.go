@@ -2,10 +2,20 @@ package solutions
 
 // Questiom: https://leetcode.com/problems/expressive-words/
 func expressiveWords(S string, words []string) int {
-	return 0
+
+	validWordCount := 0
+	stretchyInfo := createStretchyInfosFrom(S)
+
+	for _, word := range words {
+		if isWordStretchy(word, stretchyInfo) {
+			validWordCount++
+		}
+	}
+
+	return validWordCount
 }
 
-func createStretchyInfos(word string) []StretchyInfo {
+func createStretchyInfosFrom(word string) []StretchyInfo {
 	previousLetter := rune(word[0])
 	repeatLetterCount := 0
 
@@ -59,6 +69,8 @@ func isWordStretchy(word string, StretchyInfos []StretchyInfo) bool {
 			} else {
 				idx++
 			}
+		} else {
+			return false
 		}
 	}
 
