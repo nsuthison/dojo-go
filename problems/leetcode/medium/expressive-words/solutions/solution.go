@@ -3,6 +3,10 @@ package solutions
 // Questiom: https://leetcode.com/problems/expressive-words/
 func expressiveWords(S string, words []string) int {
 
+	if len(S) == 0 {
+		return 0
+	}
+
 	validWordCount := 0
 	stretchyInfo := createStretchyInfosFrom(S)
 
@@ -17,7 +21,7 @@ func expressiveWords(S string, words []string) int {
 
 func createStretchyInfosFrom(word string) []StretchyInfo {
 	previousLetter := rune(word[0])
-	repeatLetterCount := 0
+	repeatLetterCount := 1
 
 	stretchyInfos := make([]StretchyInfo, 0)
 
@@ -30,10 +34,10 @@ func createStretchyInfosFrom(word string) []StretchyInfo {
 
 			switch repeatLetterCount {
 			case 2:
-				stretchyInfos = append(stretchyInfos, StretchyInfo{previousLetter, isLetterStretchy})
-				stretchyInfos = append(stretchyInfos, StretchyInfo{previousLetter, isLetterStretchy})
+				stretchyInfos = append(stretchyInfos, StretchyInfo{previousLetter, isLetterStretchy, 1})
+				stretchyInfos = append(stretchyInfos, StretchyInfo{previousLetter, isLetterStretchy, 1})
 			default:
-				stretchyInfos = append(stretchyInfos, StretchyInfo{previousLetter, isLetterStretchy})
+				stretchyInfos = append(stretchyInfos, StretchyInfo{previousLetter, isLetterStretchy, repeatLetterCount})
 			}
 
 			repeatLetterCount = 1
@@ -63,8 +67,14 @@ func isWordStretchy(word string, StretchyInfos []StretchyInfo) bool {
 			}
 
 			if stretchyInfo.IsStretchy {
+				repeatLetterCount := 0
 				for idx < len(word) && stretchyInfo.Letter == rune(word[idx]) {
 					idx++
+					repeatLetterCount++
+				}
+
+				if stretchyInfo.LetterCount < repeatLetterCount {
+					return false
 				}
 			} else {
 				idx++
@@ -74,11 +84,16 @@ func isWordStretchy(word string, StretchyInfos []StretchyInfo) bool {
 		}
 	}
 
+	if idx < len(word) {
+		return false
+	}
+
 	return true
 }
 
 // StretchyInfo Map to represent that is the letter stretchy
 type StretchyInfo struct {
-	Letter     rune
-	IsStretchy bool
+	Letter      rune
+	IsStretchy  bool
+	LetterCount int
 }
