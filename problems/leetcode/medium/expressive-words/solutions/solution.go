@@ -20,12 +20,13 @@ func expressiveWords(S string, words []string) int {
 }
 
 func createLetterInfosFrom(word string) []LetterInfo {
-	previousLetter := rune(word[0])
-	repeatLetterCount := 1
 
 	letterInfos := make([]LetterInfo, 0)
+	repeatLetterCount := 1
 
 	for idx := 1; idx <= len(word); idx++ {
+		previousLetter := rune(word[idx-1])
+
 		if idx < len(word) && rune(word[idx]) == previousLetter {
 			repeatLetterCount++
 		} else {
@@ -34,17 +35,9 @@ func createLetterInfosFrom(word string) []LetterInfo {
 
 			repeatLetterCount = 1
 		}
-
-		if idx < len(word) {
-			previousLetter = rune(word[idx])
-		}
 	}
 
 	return letterInfos
-}
-
-func isLetterStretchy(repeatLetterCount int) bool {
-	return repeatLetterCount >= 3
 }
 
 func isWordStretchy(word string, letterInfos []LetterInfo) bool {
@@ -52,37 +45,44 @@ func isWordStretchy(word string, letterInfos []LetterInfo) bool {
 	idx := 0
 
 	for _, letterInfo := range letterInfos {
-		if idx < len(word) {
 
-			if letterInfo.Letter != rune(word[idx]) {
+		// If idx equal or more than word length it should already check all letterInfos.
+		// Or else, word have more letter than the base one
+		if idx >= len(word) {
+			return false
+		}
+
+		if letterInfo.Letter != rune(word[idx]) {
+			return false
+		}
+
+		repeatLetterCount := 0
+		for idx < len(word) && letterInfo.Letter == rune(word[idx]) {
+			idx++
+			repeatLetterCount++
+		}
+
+		if isLetterStretchy(letterInfo.LetterCount) {
+			if letterInfo.LetterCount < repeatLetterCount {
 				return false
 			}
-
-			repeatLetterCount := 0
-			for idx < len(word) && letterInfo.Letter == rune(word[idx]) {
-				idx++
-				repeatLetterCount++
-			}
-
-			if isLetterStretchy(letterInfo.LetterCount) {
-				if letterInfo.LetterCount < repeatLetterCount {
-					return false
-				}
-			} else {
-				if letterInfo.LetterCount != repeatLetterCount {
-					return false
-				}
-			}
 		} else {
-			return false
+			if letterInfo.LetterCount != repeatLetterCount {
+				return false
+			}
 		}
 	}
 
+	// If letterInfos is exhaust but still has some letter in word to check, this word is shorter than the base one.
 	if idx < len(word) {
 		return false
 	}
 
 	return true
+}
+
+func isLetterStretchy(repeatLetterCount int) bool {
+	return repeatLetterCount >= 3
 }
 
 // LetterInfo Map to represent that is the letter stretchy
