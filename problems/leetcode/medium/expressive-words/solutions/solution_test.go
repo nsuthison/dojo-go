@@ -37,16 +37,16 @@ func Test_expressiveWords(t *testing.T) {
 	}
 }
 
-func Test_createStretchyInfosFrom(t *testing.T) {
+func Test_createLetterInfosFrom(t *testing.T) {
 	Convey("Given some string", t, func() {
 
 		someString := "heeellooo"
 
-		Convey("When create stretchyInfos", func() {
+		Convey("When create letterInfos", func() {
 
 			stretchyMap := createLetterInfosFrom(someString)
 
-			Convey("Then it should create stretchyInfos in order", func() {
+			Convey("Then it should create letterInfos in order", func() {
 				So(stretchyMap[0].Letter, ShouldEqual, 'h')
 				So(stretchyMap[0].LetterCount, ShouldEqual, 1)
 
@@ -64,7 +64,7 @@ func Test_createStretchyInfosFrom(t *testing.T) {
 }
 
 func Test_isWordStretchy(t *testing.T) {
-	Convey("Given stretchyInfos and string which valid to the infos", t, func() {
+	Convey("Given letterInfos and string which valid to the infos", t, func() {
 
 		someString := "hello"
 		stretchyInfos := createLetterInfosFrom("heeellooo")

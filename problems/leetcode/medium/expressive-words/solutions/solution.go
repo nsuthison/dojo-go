@@ -1,5 +1,7 @@
 package solutions
 
+import models "github.com/nsuthison/dojo-go/problems/leetcode/medium/expressive-words/models"
+
 // Questiom: https://leetcode.com/problems/expressive-words/
 func expressiveWords(S string, words []string) int {
 
@@ -19,9 +21,9 @@ func expressiveWords(S string, words []string) int {
 	return validWordCount
 }
 
-func createLetterInfosFrom(word string) []LetterInfo {
+func createLetterInfosFrom(word string) []models.LetterInfo {
 
-	letterInfos := make([]LetterInfo, 0)
+	letterInfos := make([]models.LetterInfo, 0)
 	repeatLetterCount := 1
 
 	for idx := 1; idx <= len(word); idx++ {
@@ -31,7 +33,7 @@ func createLetterInfosFrom(word string) []LetterInfo {
 			repeatLetterCount++
 		} else {
 
-			letterInfos = append(letterInfos, LetterInfo{previousLetter, repeatLetterCount})
+			letterInfos = append(letterInfos, models.LetterInfo{Letter: previousLetter, LetterCount: repeatLetterCount})
 
 			repeatLetterCount = 1
 		}
@@ -40,7 +42,7 @@ func createLetterInfosFrom(word string) []LetterInfo {
 	return letterInfos
 }
 
-func isWordStretchy(word string, letterInfos []LetterInfo) bool {
+func isWordStretchy(word string, letterInfos []models.LetterInfo) bool {
 
 	idx := 0
 
@@ -83,10 +85,4 @@ func isWordStretchy(word string, letterInfos []LetterInfo) bool {
 
 func isLetterStretchy(repeatLetterCount int) bool {
 	return repeatLetterCount >= 3
-}
-
-// LetterInfo Map to represent that is the letter stretchy
-type LetterInfo struct {
-	Letter      rune
-	LetterCount int
 }
