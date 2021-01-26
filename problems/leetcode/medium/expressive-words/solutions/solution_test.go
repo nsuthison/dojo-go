@@ -48,23 +48,15 @@ func Test_createStretchyInfosFrom(t *testing.T) {
 
 			Convey("Then it should create stretchyInfos in order", func() {
 				So(stretchyMap[0].Letter, ShouldEqual, 'h')
-				So(stretchyMap[0].IsStretchy, ShouldEqual, false)
 				So(stretchyMap[0].LetterCount, ShouldEqual, 1)
 
 				So(stretchyMap[1].Letter, ShouldEqual, 'e')
-				So(stretchyMap[1].IsStretchy, ShouldEqual, true)
 				So(stretchyMap[1].LetterCount, ShouldEqual, 3)
 
 				So(stretchyMap[2].Letter, ShouldEqual, 'l')
-				So(stretchyMap[2].IsStretchy, ShouldEqual, false)
 				So(stretchyMap[2].LetterCount, ShouldEqual, 2)
 
-				// So(stretchyMap[3].Letter, ShouldEqual, 'l')
-				// So(stretchyMap[3].IsStretchy, ShouldEqual, false)
-				// So(stretchyMap[3].LetterCount, ShouldEqual, 1)
-
 				So(stretchyMap[3].Letter, ShouldEqual, 'o')
-				So(stretchyMap[3].IsStretchy, ShouldEqual, true)
 				So(stretchyMap[3].LetterCount, ShouldEqual, 3)
 			})
 		})

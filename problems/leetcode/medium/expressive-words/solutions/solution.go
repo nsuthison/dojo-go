@@ -30,17 +30,7 @@ func createLetterInfosFrom(word string) []LetterInfo {
 			repeatLetterCount++
 		} else {
 
-			isLetterStretchy := isLetterStretchy(repeatLetterCount)
-
-			letterInfos = append(letterInfos, LetterInfo{previousLetter, isLetterStretchy, repeatLetterCount})
-
-			// switch repeatLetterCount {
-			// case 2:
-			// 	letterInfos = append(letterInfos, LetterInfo{previousLetter, isLetterStretchy, 1})
-			// 	letterInfos = append(letterInfos, LetterInfo{previousLetter, isLetterStretchy, 1})
-			// default:
-			// 	letterInfos = append(letterInfos, LetterInfo{previousLetter, isLetterStretchy, repeatLetterCount})
-			// }
+			letterInfos = append(letterInfos, LetterInfo{previousLetter, repeatLetterCount})
 
 			repeatLetterCount = 1
 		}
@@ -74,7 +64,7 @@ func isWordStretchy(word string, letterInfos []LetterInfo) bool {
 				repeatLetterCount++
 			}
 
-			if letterInfo.IsStretchy {
+			if isLetterStretchy(letterInfo.LetterCount) {
 				if letterInfo.LetterCount < repeatLetterCount {
 					return false
 				}
@@ -98,6 +88,5 @@ func isWordStretchy(word string, letterInfos []LetterInfo) bool {
 // LetterInfo Map to represent that is the letter stretchy
 type LetterInfo struct {
 	Letter      rune
-	IsStretchy  bool
 	LetterCount int
 }
