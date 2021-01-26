@@ -8,10 +8,10 @@ func expressiveWords(S string, words []string) int {
 	}
 
 	validWordCount := 0
-	stretchyInfo := createStretchyInfosFrom(S)
+	letterInfos := createLetterInfosFrom(S)
 
 	for _, word := range words {
-		if isWordStretchy(word, stretchyInfo) {
+		if isWordStretchy(word, letterInfos) {
 			validWordCount++
 		}
 	}
@@ -19,11 +19,11 @@ func expressiveWords(S string, words []string) int {
 	return validWordCount
 }
 
-func createStretchyInfosFrom(word string) []StretchyInfo {
+func createLetterInfosFrom(word string) []LetterInfo {
 	previousLetter := rune(word[0])
 	repeatLetterCount := 1
 
-	stretchyInfos := make([]StretchyInfo, 0)
+	letterInfos := make([]LetterInfo, 0)
 
 	for idx := 1; idx <= len(word); idx++ {
 		if idx < len(word) && rune(word[idx]) == previousLetter {
@@ -32,13 +32,15 @@ func createStretchyInfosFrom(word string) []StretchyInfo {
 
 			isLetterStretchy := isLetterStretchy(repeatLetterCount)
 
-			switch repeatLetterCount {
-			case 2:
-				stretchyInfos = append(stretchyInfos, StretchyInfo{previousLetter, isLetterStretchy, 1})
-				stretchyInfos = append(stretchyInfos, StretchyInfo{previousLetter, isLetterStretchy, 1})
-			default:
-				stretchyInfos = append(stretchyInfos, StretchyInfo{previousLetter, isLetterStretchy, repeatLetterCount})
-			}
+			letterInfos = append(letterInfos, LetterInfo{previousLetter, isLetterStretchy, repeatLetterCount})
+
+			// switch repeatLetterCount {
+			// case 2:
+			// 	letterInfos = append(letterInfos, LetterInfo{previousLetter, isLetterStretchy, 1})
+			// 	letterInfos = append(letterInfos, LetterInfo{previousLetter, isLetterStretchy, 1})
+			// default:
+			// 	letterInfos = append(letterInfos, LetterInfo{previousLetter, isLetterStretchy, repeatLetterCount})
+			// }
 
 			repeatLetterCount = 1
 		}
@@ -48,36 +50,38 @@ func createStretchyInfosFrom(word string) []StretchyInfo {
 		}
 	}
 
-	return stretchyInfos
+	return letterInfos
 }
 
 func isLetterStretchy(repeatLetterCount int) bool {
 	return repeatLetterCount >= 3
 }
 
-func isWordStretchy(word string, StretchyInfos []StretchyInfo) bool {
+func isWordStretchy(word string, letterInfos []LetterInfo) bool {
 
 	idx := 0
 
-	for _, stretchyInfo := range StretchyInfos {
+	for _, letterInfo := range letterInfos {
 		if idx < len(word) {
 
-			if stretchyInfo.Letter != rune(word[idx]) {
+			if letterInfo.Letter != rune(word[idx]) {
 				return false
 			}
 
-			if stretchyInfo.IsStretchy {
-				repeatLetterCount := 0
-				for idx < len(word) && stretchyInfo.Letter == rune(word[idx]) {
-					idx++
-					repeatLetterCount++
-				}
+			repeatLetterCount := 0
+			for idx < len(word) && letterInfo.Letter == rune(word[idx]) {
+				idx++
+				repeatLetterCount++
+			}
 
-				if stretchyInfo.LetterCount < repeatLetterCount {
+			if letterInfo.IsStretchy {
+				if letterInfo.LetterCount < repeatLetterCount {
 					return false
 				}
 			} else {
-				idx++
+				if letterInfo.LetterCount != repeatLetterCount {
+					return false
+				}
 			}
 		} else {
 			return false
@@ -91,8 +95,8 @@ func isWordStretchy(word string, StretchyInfos []StretchyInfo) bool {
 	return true
 }
 
-// StretchyInfo Map to represent that is the letter stretchy
-type StretchyInfo struct {
+// LetterInfo Map to represent that is the letter stretchy
+type LetterInfo struct {
 	Letter      rune
 	IsStretchy  bool
 	LetterCount int
