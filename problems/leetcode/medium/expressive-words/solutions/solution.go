@@ -50,11 +50,9 @@ func isWordStretchy(word string, letterInfos []models.LetterInfo) bool {
 
 		// If idx equal or more than word length it should already check all letterInfos.
 		// Or else, word have more letter than the base one
-		if idx >= len(word) {
-			return false
-		}
-
-		if letterInfo.Letter != rune(word[idx]) {
+		// also, if current letter in letterInfo is not match letter in word to check
+		// then the letter in word is invalid to the letterInfo rule
+		if idx >= len(word) || letterInfo.Letter != rune(word[idx]) {
 			return false
 		}
 
@@ -64,14 +62,8 @@ func isWordStretchy(word string, letterInfos []models.LetterInfo) bool {
 			repeatLetterCount++
 		}
 
-		if isLetterStretchy(letterInfo.LetterCount) {
-			if letterInfo.LetterCount < repeatLetterCount {
-				return false
-			}
-		} else {
-			if letterInfo.LetterCount != repeatLetterCount {
-				return false
-			}
+		if !isLetterInWordValid(letterInfo, repeatLetterCount) {
+			return false
 		}
 	}
 
@@ -81,6 +73,21 @@ func isWordStretchy(word string, letterInfos []models.LetterInfo) bool {
 	}
 
 	return true
+}
+
+func isLetterInWordValid(letterInfo models.LetterInfo, repeatLetterCount int) bool {
+
+	if isLetterStretchy(letterInfo.LetterCount) {
+		if letterInfo.LetterCount >= repeatLetterCount {
+			return true
+		}
+	} else {
+		if letterInfo.LetterCount == repeatLetterCount {
+			return true
+		}
+	}
+
+	return false
 }
 
 func isLetterStretchy(repeatLetterCount int) bool {
