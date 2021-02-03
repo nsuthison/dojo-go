@@ -46,4 +46,5 @@ jobs:
         CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TEST_REPORT_ID }}
       with:
         coverageLocations: |
-          ${{github.workspace}}/codecoverage.lcov:lcov
+          ${{ github.workspace }}/codecoverage.lcov:lcov
+          
