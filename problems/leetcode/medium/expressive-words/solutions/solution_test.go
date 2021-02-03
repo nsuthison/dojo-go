@@ -50,7 +50,7 @@ func Test_createLetterInfosFrom(t *testing.T) {
 				So(stretchyMap[0].Letter, ShouldEqual, 'h')
 				So(stretchyMap[0].LetterCount, ShouldEqual, 1)
 
-				So(stretchyMap[1].Letter, ShouldEqual, 'x')
+				So(stretchyMap[1].Letter, ShouldEqual, 'e')
 				So(stretchyMap[1].LetterCount, ShouldEqual, 3)
 
 				So(stretchyMap[2].Letter, ShouldEqual, 'l')
