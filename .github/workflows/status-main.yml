@@ -31,6 +31,11 @@ jobs:
     - name: Run testing
       run: go test ./.../solutions -coverprofile codecoverage.out
 
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        files: ./codecoverage.out
+
     # Convert coverage file type from .out which generate from gocov to lcov
     # because code climate test-report have a problem with .out from gocov file.
     - name: Convert gocov to lcov 
@@ -47,4 +52,3 @@ jobs:
       with:
         coverageLocations: |
           ${{ github.workspace }}/codecoverage.lcov:lcov
-          
