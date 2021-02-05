@@ -35,20 +35,3 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
         files: ./codecoverage.out
-
-    # Convert coverage file type from .out which generate from gocov to lcov
-    # because code climate test-report have a problem with .out from gocov file.
-    - name: Convert gocov to lcov 
-      uses: jandelgado/gcov2lcov-action@v1.0.4
-      with:
-        infile: codecoverage.out
-        outfile: codecoverage.lcov
-
-    # Upload coverage report to codeclimate
-    - name: Upload report to codeclimate
-      uses: paambaati/codeclimate-action@v2.7.5
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TEST_REPORT_ID }}
-      with:
-        coverageLocations: |
-          ${{ github.workspace }}/codecoverage.lcov:lcov
