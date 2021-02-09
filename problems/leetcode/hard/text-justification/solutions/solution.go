@@ -35,11 +35,13 @@ func fillInSpaceFor(wordSeparateToLine [][]string, maxWidth int) []string {
 	for _, wordsInEachLine := range wordSeparateToLine {
 		numberOfLetterInLine := totalLetterIn(wordsInEachLine)
 
-		totalSpace := maxWidth - numberOfLetterInLine
-		numberOfSpaceBetweenWord := totalSpace / numberOfLetterInLine
-		spaceFraction := totalSpace % numberOfLetterInLine
+		totalSpaceChar := maxWidth - numberOfLetterInLine
+		numberOfSpaceGap := getNumberOfSpaceGapInTextFor(wordsInEachLine)
 
-		justifyText := createJustifyTextFrom(wordsInEachLine, numberOfSpaceBetweenWord, spaceFraction)
+		spaceWidthBetweenWord := totalSpaceChar / numberOfSpaceGap
+		spaceFraction := totalSpaceChar % numberOfSpaceGap
+
+		justifyText := createJustifyTextFrom(wordsInEachLine, spaceWidthBetweenWord, spaceFraction)
 
 		justifyTexts = append(justifyTexts, justifyText)
 	}
@@ -47,20 +49,31 @@ func fillInSpaceFor(wordSeparateToLine [][]string, maxWidth int) []string {
 	return justifyTexts
 }
 
-func createJustifyTextFrom(words []string, numberOfSpaceBetweenWord int, spaceFraction int) string {
+func getNumberOfSpaceGapInTextFor(words []string) int {
+
+	numberOfWords := len(words)
+
+	if numberOfWords == 1 {
+		return 1
+	}
+
+	return numberOfWords - 1
+}
+
+func createJustifyTextFrom(words []string, spaceWidthBetweenWord int, spaceFraction int) string {
 	toReturn := ""
 
 	for idx, word := range words {
 
-		spaceToFillIn := numberOfSpaceBetweenWord
+		spaceToFillIn := spaceWidthBetweenWord
 
 		switch idx {
 		case 0:
-			spaceToFillIn = numberOfSpaceBetweenWord + spaceFraction
+			spaceToFillIn = spaceWidthBetweenWord + spaceFraction
 		case len(words) - 1:
 			spaceToFillIn = 0
 		default:
-			spaceToFillIn = numberOfSpaceBetweenWord
+			spaceToFillIn = spaceWidthBetweenWord
 		}
 
 		toReturn += word

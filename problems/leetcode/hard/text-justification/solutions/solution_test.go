@@ -22,24 +22,26 @@ var fullJustifyTestCases = []struct {
 	},
 }
 
-// func Test_fullJustify(t *testing.T) {
-// 	for _, testCase := range fullJustifyTestCases {
-// 		t.Run("fullJustify test", func(t *testing.T) {
-// 			Convey("Given words and maxwidth to justify", t, func() {
-// 				words := testCase.words
-// 				maxWidth := testCase.maxWidth
+func Test_fullJustify(t *testing.T) {
+	for _, testCase := range fullJustifyTestCases {
+		t.Run("fullJustify test", func(t *testing.T) {
+			Convey("Given words and maxwidth to justify", t, func() {
+				words := testCase.words
+				maxWidth := testCase.maxWidth
 
-// 				Convey("When justify", func() {
-// 					result := fullJustify(words, maxWidth)
+				Convey("When justify", func() {
+					result := fullJustify(words, maxWidth)
 
-// 					Convey("Then the result string of each line should be fit with maxWidth", func() {
-// 						So(result, ShouldEqual, testCase.expectedResult)
-// 					})
-// 				})
-// 			})
-// 		})
-// 	}
-// }
+					Convey("Then the result string of each line should be fit with maxWidth", func() {
+						for i := 0; i < len(testCase.expectedResult); i++ {
+							So(result[i], ShouldEqual, testCase.expectedResult[i])
+						}
+					})
+				})
+			})
+		})
+	}
+}
 
 func Test_groupWordsToLineFrom(t *testing.T) {
 	Convey("Given words and maximumWidth", t, func() {
@@ -67,10 +69,10 @@ func Test_groupWordsToLineFrom(t *testing.T) {
 }
 
 var createJustifyTextTestCases = []struct {
-	words                    []string
-	numberOfSpaceBetweenWord int
-	spaceFraction            int
-	expected                 string
+	words                 []string
+	spaceWidthBetweenWord int
+	spaceFraction         int
+	expected              string
 }{
 	{
 		[]string{"This", "is", "an"},
@@ -86,8 +88,8 @@ var createJustifyTextTestCases = []struct {
 	},
 	{
 		[]string{"justification."},
-		1,
-		1,
+		2,
+		0,
 		"justification.  ",
 	},
 }
@@ -98,11 +100,11 @@ func Test_createJustifyTextFrom(t *testing.T) {
 		t.Run("Test_createJustifyTextFrom test", func(t *testing.T) {
 			Convey("Given words, number of space between each word, and number of space fraction", t, func() {
 				words := testCase.words
-				numberOfSpaceBetweenWord := testCase.numberOfSpaceBetweenWord
+				spaceWidthBetweenWord := testCase.spaceWidthBetweenWord
 				spaceFraction := testCase.spaceFraction
 
 				Convey("When create justify text", func() {
-					result := createJustifyTextFrom(words, numberOfSpaceBetweenWord, spaceFraction)
+					result := createJustifyTextFrom(words, spaceWidthBetweenWord, spaceFraction)
 
 					Convey("Then the result should be the text that combine each word with spaces", func() {
 						So(result, ShouldEqual, testCase.expected)
