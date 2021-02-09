@@ -12,8 +12,8 @@ func groupWordsToLineFrom(words []string, maxWidth int) [][]string {
 	toReturn := make([][]string, 0)
 
 	eachLine := make([]string, 0)
-	for _, word := range words {
-		if totalLenWithSpace(eachLine)+1+len(word) > maxWidth {
+	for idx, word := range words {
+		if totalLenWithSpace(eachLine)+1+len(word) > maxWidth && idx != 0 {
 			toReturn = append(toReturn, eachLine)
 			eachLine = make([]string, 0)
 		}
@@ -70,15 +70,19 @@ func createJustifyTextFrom(words []string, maxWidth int) string {
 	toReturn := ""
 	for idx, word := range words {
 
-		spaceToFillIn := spaceWidthBetweenWord
+		spaceToFillIn := 0
 
-		switch idx {
-		case 0:
-			spaceToFillIn = spaceWidthBetweenWord + spaceFraction
-		case len(words) - 1:
-			spaceToFillIn = 0
-		default:
+		if len(words) == 1 {
 			spaceToFillIn = spaceWidthBetweenWord
+		} else {
+			switch i := idx; {
+			case i < spaceFraction:
+				spaceToFillIn = spaceWidthBetweenWord + 1
+			case i == len(words)-1:
+				spaceToFillIn = 0
+			default:
+				spaceToFillIn = spaceWidthBetweenWord
+			}
 		}
 
 		toReturn += word

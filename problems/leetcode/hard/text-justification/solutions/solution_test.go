@@ -20,18 +20,39 @@ var fullJustifyTestCases = []struct {
 			"justification.  ",
 		},
 	},
-	// {
-	// 	[]string{"Science", "is", "what", "we", "understand", "well", "enough", "to", "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"},
-	// 	20,
-	// 	[]string{
-	// 		"Science  is  what we",
-	// 		"understand      well",
-	// 		"enough to explain to",
-	// 		"a  computer.  Art is",
-	// 		"everything  else  we",
-	// 		"do                  ",
-	// 	},
-	// },
+	{
+		[]string{"Science", "is", "what", "we", "understand", "well", "enough", "to", "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"},
+		20,
+		[]string{
+			"Science  is  what we",
+			"understand      well",
+			"enough to explain to",
+			"a  computer.  Art is",
+			"everything  else  we",
+			"do                  ",
+		},
+	},
+	{
+		[]string{"What", "must", "be", "acknowledgment", "shall", "be"},
+		16,
+		[]string{
+			"What   must   be",
+			"acknowledgment  ",
+			"shall be        ",
+		},
+	},
+	{
+		[]string{"Listen", "to", "many,", "speak", "to", "a", "few."},
+		6,
+		[]string{
+			"Listen",
+			"to    ",
+			"many, ",
+			"speak ",
+			"to   a",
+			"few.  ",
+		},
+	},
 }
 
 func Test_fullJustify(t *testing.T) {
@@ -55,29 +76,56 @@ func Test_fullJustify(t *testing.T) {
 	}
 }
 
+var groupWordsToLineFromTestCases = []struct {
+	words    []string
+	maxWidth int
+	expected [][]string
+}{
+	{
+		[]string{"This", "is", "an", "example", "of", "text", "justification."},
+		16,
+		[][]string{
+			{"This", "is", "an"},
+			{"example", "of", "text"},
+			{"justification."},
+		},
+	},
+	{
+		[]string{"Listen", "to", "many,", "speak", "to", "a", "few."},
+		6,
+		[][]string{
+			{"Listen"},
+			{"to"},
+			{"many,"},
+			{"speak"},
+			{"to", "a"},
+			{"few."},
+		},
+	},
+}
+
 func Test_groupWordsToLineFrom(t *testing.T) {
-	Convey("Given words and maximumWidth", t, func() {
-		words := []string{"This", "is", "an", "example", "of", "text", "justification."}
-		maxWidth := 16
+	for _, testCase := range groupWordsToLineFromTestCases {
+		t.Run("Test_createJustifyTextFrom test", func(t *testing.T) {
+			Convey("Given words and maximumWidth", t, func() {
+				words := testCase.words
+				maxWidth := testCase.maxWidth
 
-		Convey("When group words to line", func() {
-			result := groupWordsToLineFrom(words, maxWidth)
+				Convey("When group words to line", func() {
+					result := groupWordsToLineFrom(words, maxWidth)
 
-			Convey("Then the result should be words separate to each line", func() {
-				expected := [][]string{
-					{"This", "is", "an"},
-					{"example", "of", "text"},
-					{"justification."},
-				}
+					Convey("Then the result should be words separate to each line", func() {
 
-				for lineIdx := 0; lineIdx < len(result); lineIdx++ {
-					for wordIdx := 0; wordIdx < len(result[lineIdx]); wordIdx++ {
-						So(result[lineIdx][wordIdx], ShouldEqual, expected[lineIdx][wordIdx])
-					}
-				}
+						for lineIdx := 0; lineIdx < len(result); lineIdx++ {
+							for wordIdx := 0; wordIdx < len(result[lineIdx]); wordIdx++ {
+								So(result[lineIdx][wordIdx], ShouldEqual, testCase.expected[lineIdx][wordIdx])
+							}
+						}
+					})
+				})
 			})
 		})
-	})
+	}
 }
 
 var createJustifyTextTestCases = []struct {
@@ -99,6 +147,16 @@ var createJustifyTextTestCases = []struct {
 		[]string{"justification."},
 		16,
 		"justification.  ",
+	},
+	{
+		[]string{"Science", "is", "what", "we"},
+		20,
+		"Science  is  what we",
+	},
+	{
+		[]string{"Listen"},
+		6,
+		"Listen",
 	},
 }
 
