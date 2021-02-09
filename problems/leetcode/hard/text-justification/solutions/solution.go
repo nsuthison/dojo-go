@@ -31,17 +31,16 @@ func groupWordsToLineFrom(words []string, maxWidth int) [][]string {
 func fillInSpaceFor(wordSeparateToLine [][]string, maxWidth int) []string {
 
 	justifyTexts := make([]string, 0)
+	lastLineIdx := len(wordSeparateToLine) - 1
 
-	for _, wordsInEachLine := range wordSeparateToLine {
-		numberOfLetterInLine := totalLetterIn(wordsInEachLine)
+	for idx, wordsInEachLine := range wordSeparateToLine {
 
-		totalSpaceChar := maxWidth - numberOfLetterInLine
-		numberOfSpaceGap := getNumberOfSpaceGapInTextFor(wordsInEachLine)
-
-		spaceWidthBetweenWord := totalSpaceChar / numberOfSpaceGap
-		spaceFraction := totalSpaceChar % numberOfSpaceGap
-
-		justifyText := createJustifyTextFrom(wordsInEachLine, spaceWidthBetweenWord, spaceFraction)
+		justifyText := ""
+		if idx == lastLineIdx {
+			justifyText = createJustifyTextForLastLineFrom(wordsInEachLine, maxWidth)
+		} else {
+			justifyText = createJustifyTextFrom(wordsInEachLine, maxWidth)
+		}
 
 		justifyTexts = append(justifyTexts, justifyText)
 	}
@@ -60,9 +59,15 @@ func getNumberOfSpaceGapInTextFor(words []string) int {
 	return numberOfWords - 1
 }
 
-func createJustifyTextFrom(words []string, spaceWidthBetweenWord int, spaceFraction int) string {
-	toReturn := ""
+func createJustifyTextFrom(words []string, maxWidth int) string {
 
+	totalSpaceChar := maxWidth - totalLetterIn(words)
+	numberOfSpaceGap := getNumberOfSpaceGapInTextFor(words)
+
+	spaceWidthBetweenWord := totalSpaceChar / numberOfSpaceGap
+	spaceFraction := totalSpaceChar % numberOfSpaceGap
+
+	toReturn := ""
 	for idx, word := range words {
 
 		spaceToFillIn := spaceWidthBetweenWord
@@ -81,6 +86,23 @@ func createJustifyTextFrom(words []string, spaceWidthBetweenWord int, spaceFract
 	}
 
 	return toReturn
+}
+
+func createJustifyTextForLastLineFrom(words []string, maxWidth int) string {
+	justifyText := ""
+	for wordIdx, word := range words {
+		lastWordIdx := len(words) - 1
+
+		if wordIdx == lastWordIdx {
+			justifyText += word
+			justifyText += createSpaces(maxWidth - len(justifyText))
+		} else {
+			justifyText += word
+			justifyText += createSpaces(1)
+		}
+	}
+
+	return justifyText
 }
 
 func createSpaces(size int) string {
