@@ -11,14 +11,16 @@ func fullJustify(words []string, maxWidth int) []string {
 func groupWordsToLineFrom(words []string, maxWidth int) [][]string {
 	toReturn := make([][]string, 0)
 
-	eachLine := make([]string, 0)
-	for idx, word := range words {
-		if totalLenWithSpace(eachLine)+1+len(word) > maxWidth && idx != 0 {
+	eachLine := []string{words[0]}
+
+	for idx := 1; idx < len(words); idx++ {
+		if totalLetterWithSpace(eachLine)+len(" ")+len(words[idx]) > maxWidth {
 			toReturn = append(toReturn, eachLine)
+
 			eachLine = make([]string, 0)
 		}
 
-		eachLine = append(eachLine, word)
+		eachLine = append(eachLine, words[idx])
 	}
 
 	if len(eachLine) > 0 {
@@ -46,17 +48,6 @@ func fillInSpaceFor(wordSeparateToLine [][]string, maxWidth int) []string {
 	}
 
 	return justifyTexts
-}
-
-func getNumberOfSpaceGapInTextFor(words []string) int {
-
-	numberOfWords := len(words)
-
-	if numberOfWords == 1 {
-		return 1
-	}
-
-	return numberOfWords - 1
 }
 
 func createJustifyTextFrom(words []string, maxWidth int) string {
@@ -92,6 +83,17 @@ func createJustifyTextFrom(words []string, maxWidth int) string {
 	return toReturn
 }
 
+func getNumberOfSpaceGapInTextFor(words []string) int {
+
+	numberOfWords := len(words)
+
+	if numberOfWords == 1 {
+		return 1
+	}
+
+	return numberOfWords - 1
+}
+
 func createJustifyTextForLastLineFrom(words []string, maxWidth int) string {
 	justifyText := ""
 	for wordIdx, word := range words {
@@ -119,7 +121,7 @@ func createSpaces(size int) string {
 	return toReturn
 }
 
-func totalLenWithSpace(words []string) int {
+func totalLetterWithSpace(words []string) int {
 	return totalLetterIn(words) + totalSpaceFor(len(words))
 }
 
