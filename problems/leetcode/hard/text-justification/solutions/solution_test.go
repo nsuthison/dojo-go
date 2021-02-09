@@ -22,7 +22,7 @@ var fullJustifyTestCases = []struct {
 	},
 }
 
-// func Test_getImportance(t *testing.T) {
+// func Test_fullJustify(t *testing.T) {
 // 	for _, testCase := range fullJustifyTestCases {
 // 		t.Run("fullJustify test", func(t *testing.T) {
 // 			Convey("Given words and maxwidth to justify", t, func() {
@@ -64,4 +64,51 @@ func Test_groupWordsToLineFrom(t *testing.T) {
 			})
 		})
 	})
+}
+
+var createJustifyTextTestCases = []struct {
+	words                    []string
+	numberOfSpaceBetweenWord int
+	spaceFraction            int
+	expected                 string
+}{
+	{
+		[]string{"This", "is", "an"},
+		4,
+		0,
+		"This    is    an",
+	},
+	{
+		[]string{"example", "of", "text"},
+		1,
+		1,
+		"example  of text",
+	},
+	{
+		[]string{"justification."},
+		1,
+		1,
+		"justification.  ",
+	},
+}
+
+func Test_createJustifyTextFrom(t *testing.T) {
+
+	for _, testCase := range createJustifyTextTestCases {
+		t.Run("Test_createJustifyTextFrom test", func(t *testing.T) {
+			Convey("Given words, number of space between each word, and number of space fraction", t, func() {
+				words := testCase.words
+				numberOfSpaceBetweenWord := testCase.numberOfSpaceBetweenWord
+				spaceFraction := testCase.spaceFraction
+
+				Convey("When create justify text", func() {
+					result := createJustifyTextFrom(words, numberOfSpaceBetweenWord, spaceFraction)
+
+					Convey("Then the result should be the text that combine each word with spaces", func() {
+						So(result, ShouldEqual, testCase.expected)
+					})
+				})
+			})
+		})
+	}
 }
