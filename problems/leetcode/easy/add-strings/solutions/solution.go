@@ -25,16 +25,16 @@ func sum(a string, b string) string {
 
 func toIntFrom(number string) int {
 	toReturn := 0
-	powerFactor := 0
+	powerFactor := 0.00
 
 	for idx := len(number) - 1; idx >= 0; idx-- {
 		letter := rune(number[idx])
-		multiplyBy := math.Pow(10, 0)
+		multiplyBy := math.Pow(10, powerFactor)
 
 		toReturn += mapRuneToInt[letter] * int(multiplyBy)
 
 		powerFactor++
 	}
 
-	return 0
+	return toReturn
 }
