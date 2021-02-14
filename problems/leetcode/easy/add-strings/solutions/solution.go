@@ -1,6 +1,9 @@
 package solutions
 
-import "math"
+import (
+	"math"
+	"strconv"
+)
 
 var mapRuneToInt = map[rune]int{
 	'0': 0,
@@ -16,11 +19,7 @@ var mapRuneToInt = map[rune]int{
 }
 
 func addStrings(num1 string, num2 string) string {
-	return ""
-}
-
-func sum(a string, b string) string {
-	return ""
+	return strconv.Itoa(toIntFrom(num1) + toIntFrom(num2))
 }
 
 func toIntFrom(number string) int {
