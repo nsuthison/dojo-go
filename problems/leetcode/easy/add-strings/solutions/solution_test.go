@@ -36,6 +36,34 @@ func Test_addString(t *testing.T) {
 	}
 }
 
+var getValueFromTestCases = []struct {
+	number      rune
+	powerFactor float64
+	expected    int
+}{
+	{'1', 2.0, 100},
+	{'9', 0.0, 9},
+}
+
+func Test_getValueFrom(t *testing.T) {
+	for _, testCase := range getValueFromTestCases {
+		t.Run("addStringTestCases", func(t *testing.T) {
+			Convey("Given number letter and powerFactor base 10", t, func() {
+				number := testCase.number
+				powerFactor := testCase.powerFactor
+
+				Convey("When get value", func() {
+					result := getValueFrom(number, powerFactor)
+
+					Convey("Then result should be value of number with power factor on base 10", func() {
+						So(result, ShouldEqual, testCase.expected)
+					})
+				})
+			})
+		})
+	}
+}
+
 var toIntFromTestCases = []struct {
 	input    string
 	expected int
