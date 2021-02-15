@@ -1,7 +1,6 @@
 package solutions
 
 import (
-	"math"
 	"strconv"
 )
 
@@ -19,40 +18,42 @@ var mapRuneToInt = map[rune]int{
 }
 
 func addStrings(num1 string, num2 string) string {
-	// lenghtToUse := 0
 
-	// if len(num1) < len(num2) {
-	// 	lenghtToUse = len(num1)
-	// } else {
-	// 	lenghtToUse = len(num2)
-	// }
+	carry := 0
+	toReturn := ""
+	idxNum1 := len(num1) - 1
+	idxNum2 := len(num2) - 1
 
-	// sum := 0
-	// for idx := 0; idx < lenghtToUse; idx++ {
+	for idxNum1 >= 0 || idxNum2 >= 0 {
 
-	// }
+		num1Value := tryGetValueFrom(num1, idxNum1)
+		num2Value := tryGetValueFrom(num2, idxNum2)
 
-	return strconv.Itoa(toIntFrom(num1) + toIntFrom(num2))
-	// return sum
-}
+		sum := num1Value + num2Value + carry
+		carry = 0
 
-func getValueFrom(number rune, powerFactor float64) int {
-	multiplyBy := math.Pow(10, powerFactor)
+		if sum > 9 {
+			carry = 1
+			sum = sum % 10
+		}
 
-	return mapRuneToInt[number] * int(multiplyBy)
-}
+		toReturn = strconv.Itoa(sum) + toReturn
 
-func toIntFrom(number string) int {
-	toReturn := 0
-	powerFactor := 0.00
+		idxNum1--
+		idxNum2--
+	}
 
-	for idx := len(number) - 1; idx >= 0; idx-- {
-		letter := rune(number[idx])
-
-		toReturn += getValueFrom(letter, powerFactor)
-
-		powerFactor++
+	if carry != 0 {
+		toReturn = strconv.Itoa(carry) + toReturn
 	}
 
 	return toReturn
+}
+
+func tryGetValueFrom(number string, index int) int {
+	if index < 0 || index >= len(number) {
+		return 0
+	}
+
+	return mapRuneToInt[rune(number[index])]
 }
